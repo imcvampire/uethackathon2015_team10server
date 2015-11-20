@@ -18,7 +18,7 @@ class Subject extends Model
     	return $this->belongsToMany('App\User');
     }
 
-    public function recommended_subjects() {
+    public function recommend_subjects() {
     	return $this->belongsToMany('App\Subject', 'subject_subject', 'main_subject_id', 'recommend_subject_id');
     }
 

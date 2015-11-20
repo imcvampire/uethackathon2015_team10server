@@ -7,7 +7,7 @@
 
     <ul class="list-group">
     	<li class="list-group-item" v-for="subject in subjects | orderBy 'totalSearch' -1">
-    		<h4><a href="#">@{{ subject.name }}</a></h4>
+    		<h4><a href="/subjects/@{{ subject.id }}">@{{ subject.name }}</a></h4>
     		<h3>@{{ subject.totalSearch }}</h3>
     	</li>
     </ul>

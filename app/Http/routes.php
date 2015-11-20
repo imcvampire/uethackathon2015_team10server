@@ -16,10 +16,10 @@ use App\Contracts\Search;
 
 // Homepage
 Route::get('/', function() {
-	return view('pages.index');
+	return view('subjects.index');
 });
 
-// Subject Controller
+// Subjects Controller
 Route::get('/subjects','SubjectsController@index');
 
 Route::post('/subjects/create','SubjectsController@create');
