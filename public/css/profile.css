@@ -1,0 +1,23 @@
+.row > span {
+    font-size: 5em;
+}
+#info #subject {
+    margin-top: 3em;
+}
+p {
+    font-size: 1.5em;
+    font-weight: 200;
+}
+.border {
+    /*margin: 2em;*/
+    border: 1px solid #a6c9c2;
+}
+table {
+    font-family: "Helvetica Neue", ​Helvetica, ​Arial, ​sans-serif;
+    font-weight: 200;
+    line-height: 1.42857;
+    font-size: 1.5em;
+}
+thead td {
+    text-align: center;
+}

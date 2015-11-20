@@ -1,0 +1,37 @@
+.ui-state-default {
+    width: 19.6%;
+}
+.ui-widget-content .ui-state-active {
+    background-color: #4cae4c;
+}
+.ui-tabs-anchor {
+    width: 100%;
+    text-align: center;
+}
+.btn-select {
+    width: 49%;
+}
+#selected {
+    border: 1px solid #a6c9e2;
+    font-family: Verdana, ​Arial, ​sans-serif;
+    font-size: 1.1em;
+}
+.select-list .ui-selecting {
+    background: #feca40;
+}
+.select-list .ui-selected {
+    background: #449d44;
+    color: white;
+}
+.select-list {
+    list-style-type: none;
+    margin: 0 0 20px 0;
+    padding: 0;
+    width: 100%;
+}
+.select-list li {
+    margin: 3px;
+    padding: 0.4em 0.4em 0.4em 2em;
+    font-size: 1.3em;
+    height: 2em;
+}
