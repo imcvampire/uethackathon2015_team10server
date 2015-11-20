@@ -15,6 +15,10 @@ use \Auth;
 
 class SubjectsController extends Controller
 {
+    protected $user;
+    public function __construct() {
+        $this->user = Auth::user();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,37 +30,55 @@ class SubjectsController extends Controller
        // return view('subjects.index', compact('subjects'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('subjects.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, $id)
-    {
-        // $id cua subject
-        $books = new Book($request->all());
-        $persons = new Person($request->all());
-        $websites = new Website($request->all());
-        $subject = new Subject($request->all());
-
-        Auth::user()->subjects()->save($subject);
-        Auth::user()->books()->save($books);
-        Auth::user()->persons()->save($persons);
-        Auth::user()->website()->save($websites);
-        return redirect('/subjects/'.$subject->id);
-
+    public function storeWebsite(Request $request) {
+        $id = $request->input('id');
+        $website = $this->user->studied_websites()->where('id', $id);
+        if ($website->count() > 0) {
+            $website->detach($id);
+            return 'Delete';
+        }
+        $this->user->studied_websites()->attach($id);
+        return 'Done!';
     }
+
+    public function storePerson(Request $request) {
+        $id = $request->input('id');
+        $person = $this->user->studied_persons()->where('id', $id);
+        if ($person->count() > 0) {
+            $person->detach($id);
+            return 'Delete';
+        }
+        $this->user->studied_persons()->attach($id);
+        return 'Done!';
+    }
+
+    public function storeBook(Request $request) {
+        $id = $request->input('id');
+        $book = $this->user->studied_books()->where('id', $id);
+        if ($book->count() > 0) {
+            $book->detach($id);
+            return 'Delete';
+        }
+        $this->user->studied_books()->attach($id);
+        return 'Done!';
+    }
+
+    public function storeSubject(Request $request) {
+        $id = $request->input('id');
+        $subject = $this->user->studied_subjects()->where('id', $id);
+        if ($subjecct->count() > 0) {
+            $subject->detach($id);
+            return 'Delete';
+        }
+        $this->user->studied_subjects()->attach($id);
+        return 'Done!';
+    }
+
 
     /**
      * Display the specified resource.

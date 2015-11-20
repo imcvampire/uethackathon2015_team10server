@@ -1,6 +1,7 @@
 @extends('app')
 
 @section('styles')
+	<meta id="token" name="token" value="{{ csrf_token() }}">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/css/selector.css">
@@ -19,11 +20,18 @@
 	            </ul>
 	            <div id="can-biet">
 	                <ul class="select-list">
-	                    @foreach ($recommend_subjects as $subject)
+	                    @foreach ($recommend_subjects as $recommend_subject)
 	                    	<li>
-	                    		<input type="checkbox" name="recommend_subject_select" id="recommend_subject_select">
-	                    		<h4><a href="/subjects/{{ $subject->id }}">{{ $subject->name }}</a></h4>
-	                    		<h3>{{ $subject->selected }} selected, {{ $subject->likes }} likes</h3>
+	                    		<input type="checkbox" 
+	                    				name="recommend_subject_select" 
+	                    				id="recommend_subject_select" 
+	                    				v-on:change="storeSubject({{ $recommend_subject->id }})" 
+		                    		@if (\Auth::user()->studied_subjects()->where('subject_id', $subject->id)->count() > 0)
+		                    			checked
+		                    		@endif
+	                    		>
+	                    		<h4><a href="/subjects/{{ $subject->id }}">{{ $recommend_subject->name }}</a></h4>
+	                    		<h3>{{ $recommend_subject->selected }} selected, {{ $recommend_subject->likes }} likes</h3>
 	                    	</li>
 	                    @endforeach
 	                </ul>
@@ -35,7 +43,15 @@
 	                <ul class="select-list">
 	                	@foreach ($websites as $website)
 	                    	<li>
-	                    		<input type="checkbox" name="website_select" id="website_select" v-on:change="updateWebsite">
+	                    		
+	                    		<input type="checkbox" 
+	                    				name="website_select" 
+	                    				id="website_select" 
+	                    				v-on:change="storeWebsite({{ $website->id }})" 
+		                    		@if (\Auth::user()->studied_websites()->where('website_id', $website->id)->count() > 0)
+		                    			checked
+		                    		@endif
+	                    		>
 	                    		<h4><a href="{{ $website->link }}">{{ $website->name }}</a></h4>
 	                    		<h3>{{ $website->selected }} selected, {{ $website->likes }} likes</h3>
 	                    		<p>{{ $website->intro }}</p>
@@ -50,7 +66,14 @@
 	                <ul class="select-list">
 	                    @foreach ($persons as $person)
 	                    	<li>
-	                    		<input type="checkbox" name="person_select" id="person_select">
+	                    		<input type="checkbox" 
+	                    				name="person_select" 
+	                    				id="person_select" 
+	                    				v-on:change="storePerson({{ $person->id }})" 
+		                    		@if (\Auth::user()->studied_persons()->where('person_id', $person->id)->count() > 0)
+		                    			checked
+		                    		@endif
+	                    		>
 	                    		<h4><a href="{{ $person->link }}">{{ $person->name }}</a></h4>
 	                    		<img src="{{ $person->avatar }}">
 	                    		<h3>{{ $website->selected }} selected, {{ $website->likes }} likes</h3>
@@ -66,7 +89,14 @@
 	                <ul class="select-list">
 	                    @foreach ($books as $book)
 	                    	<li>
-	                    		<input type="checkbox" name="book_select" id="book_select">
+	                    		<input type="checkbox" 
+	                    				name="book_select" 
+	                    				id="book_select" 
+	                    				v-on:change="storeBook({{ $book->id }})" 
+		                    		@if (\Auth::user()->studied_books()->where('book_id', $book->id)->count() > 0)
+		                    			checked
+		                    		@endif
+	                    		>
 	                    		<h4>{{ $book->name }}</a></h4>
 	                    		<img src="{{ $book->avatar }}">
 	                    		<h3>{{ $book->selected }} selected, {{ $book->likes }} likes</h3>
@@ -120,15 +150,24 @@
 	            stickTo: "document"
 	        });
 	    });
-
+	    Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
 	    new Vue({
 	    	el: '#tabs',
 	    	data: {
 
 	    	},
 	    	methods: {
-	    		updateWebsite: function() {
-	    					
+	    		storeWebsite: function(websiteId) {
+	    			this.$http.post('/subjects/websites', {id: websiteId});
+	    		},
+	    		storeSubject: function(subjectId) {
+	    			this.$http.post('/subjects/subjects', {id: subjectId});
+	    		},
+	    		storePerson: function(personId) {
+	    			this.$http.post('/subjects/persons', {id: personId});
+	    		},
+	    		storeBook: function(bookId) {
+	    			this.$http.post('/subjects/books', {id: bookId});
 	    		}
 	    	}
 	    });

@@ -32,9 +32,18 @@ Route::put('/subjects/{id}', 'SubjectController@update');
 
 Route::get('/subjects/{id}','SubjectsController@show')->where(['id' => '[0-9]+']);
 
-Route::get('/subjects/{name}', 'SubjectsController@show');
+// 4 objects (websites, subjects, books, persons)
 
-Route::get('/users','UsersController@index');
+Route::post('/subjects/websites', 'SubjectsController@storeWebsite');
+Route::post('/subjects/websites/more', 'SubjectsController@moreWebsites');
+Route::post('/subjects/subjects', 'SubjectsController@storeSubject');
+Route::post('/subjects/subjects/more', 'SubjectsController@moreSubject');
+Route::post('/subjects/books', 'SubjectsController@storeBook');
+Route::post('/subjects/books/more', 'SubjectsController@moreBook');
+Route::post('/subjects/persons', 'SubjectsController@storePerson');
+Route::post('/subjects/persons/more', 'SubjectsController@morePerson');
+
+Route::get('/subjects/{id}', 'SubjectsController@show');
 
 
 
