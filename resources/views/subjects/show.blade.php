@@ -19,11 +19,13 @@
 	            </ul>
 	            <div id="can-biet">
 	                <ul class="select-list">
-	                    <li class="ui-widget-content">1</li>
-	                    <li class="ui-widget-content">2</li>
-	                    <li class="ui-widget-content">3</li>
-	                    <li class="ui-widget-content">4</li>
-	                    <li class="ui-widget-content">5</li>
+	                    @foreach ($recommend_subjects as $subject)
+	                    	<li>
+	                    		<input type="checkbox" name="recommend_subject_select" id="recommend_subject_select">
+	                    		<h4><a href="/subjects/{{ $subject->id }}">{{ $subject->name }}</a></h4>
+	                    		<h3>{{ $subject->selected }} selected, {{ $subject->likes }} likes</h3>
+	                    	</li>
+	                    @endforeach
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
@@ -33,9 +35,9 @@
 	                <ul class="select-list">
 	                	@foreach ($websites as $website)
 	                    	<li>
-	                    		<h4>{{ $website->name }}</h4>
+	                    		<input type="checkbox" name="website_select" id="website_select" v-on:change="updateWebsite">
+	                    		<h4><a href="{{ $website->link }}">{{ $website->name }}</a></h4>
 	                    		<h3>{{ $website->selected }} selected, {{ $website->likes }} likes</h3>
-	                    		<p>{{ link_to($website->link) }}</p>
 	                    		<p>{{ $website->intro }}</p>
 	                    	</li>
 	                    @endforeach
@@ -46,11 +48,15 @@
 	            </div>
 	            <div id="nguoi">
 	                <ul class="select-list">
-	                    <li></li>
-	                    <li></li>
-	                    <li></li>
-	                    <li></li>
-	                    <li></li>
+	                    @foreach ($persons as $person)
+	                    	<li>
+	                    		<input type="checkbox" name="person_select" id="person_select">
+	                    		<h4><a href="{{ $person->link }}">{{ $person->name }}</a></h4>
+	                    		<img src="{{ $person->avatar }}">
+	                    		<h3>{{ $website->selected }} selected, {{ $website->likes }} likes</h3>
+	                    		<p>{{ $website->intro }}</p>
+	                    	</li>
+	                    @endforeach
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
@@ -58,27 +64,23 @@
 	            </div>
 	            <div id="sach">
 	                <ul class="select-list">
-	                    <li></li>
-	                    <li></li>
-	                    <li></li>
-	                    <li></li>
-	                    <li></li>
+	                    @foreach ($books as $book)
+	                    	<li>
+	                    		<input type="checkbox" name="book_select" id="book_select">
+	                    		<h4>{{ $book->name }}</a></h4>
+	                    		<img src="{{ $book->avatar }}">
+	                    		<h3>{{ $book->selected }} selected, {{ $book->likes }} likes</h3>
+	                    		<h5>{{ $book->publisher }}</h5>
+	                    		<p>{{ $book->intro }}</p>
+	                    	</li>
+	                    @endforeach
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
 	                <div class="clearfix"></div>
 	            </div>
 	            <div id="kinh-nghiem">
-	                <ul class="select-list">
-	                    <li></li>
-	                    <li></li>
-	                    <li></li>
-	                    <li></li>
-	                    <li></li>
-	                </ul>
-	                <button type="submit" class="btn btn-success pull-left btn-select">Xem thêm</button>
-	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
-	                <div class="clearfix"></div>
+	                <!-- Disqus -->
 	            </div>
 	        </div>
 	    </div>
@@ -95,10 +97,12 @@
 @stop
 
 @section('scripts')
-	<script rel="script" type="text/javascript" src="js/jquery.min.js"></script>
-	<script rel="script" type="text/javascript" src="js/jquery-ui.min.js"></script>
-	<script rel="script" type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script rel="script" type="text/javascript" src="js/jquery.hc-sticky.min.js"></script>
+	<script rel="script" type="text/javascript" src="/js/jquery.min.js"></script>
+	<script rel="script" type="text/javascript" src="/js/jquery-ui.min.js"></script>
+	<script rel="script" type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script rel="script" type="text/javascript" src="/js/jquery.hc-sticky.min.js"></script>
+	<script src="/js/vue.min.js"></script>
+	<script src="/js/vue-resource.min.js"></script>
 	<script>
 	    //    tab
 	    $(function () {
@@ -115,6 +119,18 @@
 	        $('#selected').hcSticky({
 	            stickTo: "document"
 	        });
+	    });
+
+	    new Vue({
+	    	el: '#tabs',
+	    	data: {
+
+	    	},
+	    	methods: {
+	    		updateWebsite: function() {
+	    					
+	    		}
+	    	}
 	    });
 	</script>
 @stop

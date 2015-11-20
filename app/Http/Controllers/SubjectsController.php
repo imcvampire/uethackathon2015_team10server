@@ -84,17 +84,11 @@ class SubjectsController extends Controller
             'subject', 
             'persons', 
             'books',
-            'websites'
-            //'recommend_subjects'
+            'websites',
+            'recommend_subjects'
         ));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         // chi danh cho admin moi co the edit
@@ -102,13 +96,6 @@ class SubjectsController extends Controller
         return view('subjects.edit')->with(['books' => $subject->books, 'persons' =>$subject->persons, 'websites' => $subject->websites]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $books = new Book($request->all());

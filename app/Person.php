@@ -27,6 +27,6 @@ class Person extends Model
     }
 
     public function users() {
-    	return $this->belongsToMany('App\User');
+    	return $this->belongsToMany('App\User', 'person_user', 'user_id', 'person_id');
     }
 }

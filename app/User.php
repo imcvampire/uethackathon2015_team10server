@@ -65,15 +65,15 @@ class User extends Model implements AuthenticatableContract,
     }
 
     public function studied_books() {
-        return $this->belongsToMany('App\Book');
+        return $this->belongsToMany('App\Book', 'book_user', 'user_id', 'book_id');
     }
 
     public function studied_websites() {
-        return $this->belongsToMany('App\Website');
+        return $this->belongsToMany('App\Website', 'user_website', 'user_id', 'website_id');
     }
 
     public function studied_persons() {
-        return $this->belongsToMany('App\Person');
+        return $this->belongsToMany('App\Person', 'person_user', 'user_id', 'person_id');
     }
 }
 
