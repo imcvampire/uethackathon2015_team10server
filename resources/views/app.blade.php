@@ -23,8 +23,9 @@
 
     @include('footers.footer')
     
-    @yield('scripts')
     <script src="/js/vue.min.js"></script>
+    <script src="/js/vue-resource.min.js"></script>
+    @yield('scripts')
     <script src="/js/algoliasearch.min.js"></script>
     <script>
 

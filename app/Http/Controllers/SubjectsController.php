@@ -130,10 +130,13 @@ class SubjectsController extends Controller
         $persons = $subject->persons()
                             ->orderBy('selected', 'desc')
                             ->orderBy('likes', 'desc')->get();
-        foreach ($persons as $person)
-            if ($this->user->studied_persons()->find($person->id) != null)
-                $person->studied = false;
-            else $person->studied = true;
+        if ($this->user != null) {
+            foreach ($persons as $person)
+                if ($this->user->studied_persons()->find($person->id) != null)
+                    $person->studied = false;
+                else $person->studied = true;
+        }
+
         return $persons;
     }
 
@@ -143,10 +146,13 @@ class SubjectsController extends Controller
         $websites = $subject->websites()
                             ->orderBy('selected', 'desc')
                             ->orderBy('likes', 'desc')->get();
-        foreach ($websites as $website)
-            if ($this->user->studied_websites()->find($website->id) != null)
-                $website->studied = false;
-            else $website->studied = true;
+        if ($this->user != null) {
+            foreach ($websites as $website)
+                if ($this->user->studied_websites()->find($website->id) != null)
+                    $website->studied = false;
+                else $website->studied = true;
+        }
+
 
         return $websites;
     }
@@ -157,10 +163,12 @@ class SubjectsController extends Controller
         $books = $subject->books()
                             ->orderBy('selected', 'desc')
                             ->orderBy('likes', 'desc')->get();
-        foreach ($books as $book)
-            if ($this->user->studied_books()->find($book->id) != null)
-                $book->studied = false;
-            else $book->studied = true;
+        if ($this->user != null) {
+            foreach ($books as $book)
+                if ($this->user->studied_books()->find($book->id) != null)
+                    $book->studied = false;
+                else $book->studied = true;
+        }
         return $books;
     }
 
@@ -170,10 +178,12 @@ class SubjectsController extends Controller
         $subjects = $subject->recommend_subjects()
                             ->orderBy('selected', 'desc')
                             ->orderBy('likes', 'desc')->get();
-        foreach ($subjects as $subject)
-            if ($this->user->studied_subjects()->find($subject->id) != null)
-                $subject->studied = false;
-            else $subject->studied = true;
+        if ($this->user != null) {
+            foreach ($subjects as $subject)
+                if ($this->user->studied_subjects()->find($subject->id) != null)
+                    $subject->studied = false;
+                else $subject->studied = true;
+        }
         return $subjects;
     }
 

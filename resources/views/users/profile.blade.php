@@ -10,7 +10,8 @@
 		}
 	</style>
 	<meta id="token" name="token" value="{{ csrf_token() }}">
-	<meta id="s_id" name="s_id" value="subject_id">
+	
+	<meta id="user_id" name="user_id" value="{{ $user->id }}">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.vertical-tabs.min.css">
 @stop
@@ -40,97 +41,49 @@
 		  <li><a data-toggle="tab" href="#unfinished">Đang học</a></li>
 		  <li><a data-toggle="tab" href="#finished">Đã hoàn thành</a></li>
 		  <li><a data-toggle="tab" href="#contribute">Đóng góp</a></li>
-		  <li><a data-toggle="tab" href="#wall">Lời nhắn</a></li>
 		</ul>
 		<div class="tab-content">
 		  <div id="unfinished" class="tab-pane fade in active">
-		    <ul class="list-group">
-	                    @if ($subjects0->count() == 0)
-	                	<h3>Bạn không đang học môn học nào</h3>
-	                @else
-		                @foreach ($subjects0 as $subject)
-		                	<h3><a href="/subjects/">{{ $subject->name }}</a></h3>
-		                	<div class="row">
-		                	<ul class="list-group">
-		                		<li class="list-group-item col-xs-4">
-		                			<h4>Sách đã chọn </h4>
-		                			<ul class="list-group">
-		                				@foreach ($books as $book)
-		                					@if ($book->subject == $subject)
-		                						<li class="list-group-item">{{ $book->name }}</li>
-		                					@endif
-		                				@endforeach
-		                			</ul>
-		                		</li>
-		                		<li class="list-group-item col-xs-4">
-		                			<h4>Website đã chọn</h4>
-		                			<ul class="list-group">
-		                				@foreach ($websites as $website)
-		                					@if ($website->subject == $subject)
-		                						<li class="list-group-item"><a href="{{ $website->link }}"{{ $website->name }}</a></li>
-		                					@endif
-		                				@endforeach
-		                			</ul>
-		                		</li>
-		                		<li class="list-group-item col-xs-4">
-		                			<h4>Người đã chọn</h4>
-		                			<ul class="list-group">
-		                				@foreach($persons as $person)
-		                					@if ($person->subject == $subject)
-		                						<li class="list-group-item">
-		                							<a href="{{ $person->link }}">{{ $person->name }}</a>
-		                						</li>
-		                					@endif
-		                				@endforeach
-		                			</ul>
-		                		</li>
-		                	</ul>
-		                	</div>
-		                @endforeach	
-	                @endif
+			<h3>Sách</h3>
+		    <ul class="list-group" v-for="book in books">
+				<li class="list-group-item">
+					<a class="btn @{{ book.btnSelected }} 
+	                    			glyphicon glyphicon-check" v-on:click="finishBook(book)"></a>
+					@{{ book.name }} (@{{ book.subject.name }})
+				</li>
+		    </ul>
+			<h3>Websites</h3>
+		    <ul class="list-group" v-for="website in websites">
+				<li class="list-group-item">
+					<a class="btn @{{ website.btnSelected }} 
+	                    			glyphicon glyphicon-check" v-on:click="finishWebsite(website)"></a>
+					@{{ website.name }} (@{{ website.subject.name }})
+				</li>
+		    </ul>
+		    	
 		  </div>
 		  <div id="finished" class="tab-pane fade">
-		     @if ($subjects1->count() == 0)
-	                	<h3>Bạn chưa hoàn thành môn học nào</h3>
-	                @else
-		                @foreach ($subjects1 as $subject)
-		                	<h3><a href="/subjects/"></a></h3>
-		                	<ul class="list-group">
-		                		<li class="list-group-item">
-		                			<h4>Sách đã chọn </h4>
-		                			<ul class="list-group">
-		                				@foreach ($books as $book)
-		                					@if ($book->subject == $subject)
-		                						<li class="list-group-item">{{ $book->name }}</li>
-		                					@endif
-		                				@endforeach
-		                			</ul>
-		                		</li>
-		                		<li class="list-group-item">
-		                			<h4>Website đã chọn</h4>
-		                			<ul class="list-group">
-		                				@foreach($websites as $website)
-		                					@if ($website->subject == $subject)
-		                						<li class="list-group-item"><a href="{{ $website->link }}"{{ $website->name }}</a></li>
-		                					@endif 
-		                				@endforeach
-		                			</ul>
-		                		</li>
-		                		<li class="list-group-item">
-		                			<h4>Người đã chọn</h4>
-		                			<ul class="list-group">
-		                				@foreach($persons as $person)
-		                					@if ($person->subject == $subject)
-		                						<li class="list-group-item">
-		                							<a href="{{ $person->link }}">{{ $person->name }}</a>
-		                						</li>
-		                					@endif
-		                				@endforeach
-		                			</ul>
-		                		</li>
-		                	</ul>
-		                @endforeach	
-	                @endif
+
+		        <ul class="list-group">
+		        <h3>Sách</h3>
+		   		@foreach($user->studied_books()->where('finish', 1)->get() as $book)
+		            <li class="list-group-item">{{ $book->name }} ({{ $book->subject->name }})</li>
+		        @endforeach
+		        </ul>
+
+		        <ul class="list-group">
+		        <h3>Websites</h3>
+		   		@foreach($user->studied_websites()->where('finish', 1)->get() as $website)
+		            <li class="list-group-item">{{ $website->name }} ({{ $website->subject->name }})</li>
+		        @endforeach
+		        </ul>	
+
+		        <ul class="list-group">
+		        <h3>Chuyên gia</h3>
+		   		@foreach($user->studied_persons as $person)
+		            <li class="list-group-item">{{ $person->name }} ({{ $person->subject->name }})</li>
+		        @endforeach
+		        </ul>	
 		  </div>
 		  <div id="contribute" class="tab-pane fade">
 		  		<div class="col-xs-3"> <!-- required for floating -->
@@ -180,10 +133,6 @@
 			    </div>
 			</div>  
 		  </div>
-		  
-		  <div id="wall" class="tab-pane fade">
-		  	@include('subjects.disqus')
-		  </div>
 		</div>
 		</div>
 
@@ -193,4 +142,51 @@
 @section('scripts')
 	<script rel="script" src="/js/jquery.min.js"></script>
 	<script rel="script" src="/js/bootstrap.min.js"></script>
+	<script>
+		Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
+		new Vue({
+			el: '#tabs',
+			data: {
+				books: [], websites: [],
+				id: 0
+			},
+			ready: function() {
+				id = document.querySelector('#user_id').getAttribute('value');
+				this.initialize();
+			},
+			methods: {
+				initialize: function() {
+					this.getBooks();
+					this.getWebsites();
+				},
+				getBooks: function() {
+					this.$http.post('/users/books', function(books) {
+						for (var i = 0; i < books.length; ++i)
+							books[i].btnSelected = 'btn-default';
+						this.$set('books', books);
+					});
+				},
+				getWebsites: function() {
+					this.$http.post('/users/websites', {id: id}, function(websites) {
+						for (var i = 0; i < websites.length; ++i)
+							websites[i].btnSelected = 'btn-default';
+						this.$set('websites', websites);
+					});
+				},
+				finishBook: function(book) {
+					book.finish = !book.finish;
+					if (book.finish) book.btnSelected = 'btn-warning';
+					else book.btnSelected = 'btn-default';
+					this.$http.post('/users/books/remove', {id: book.id});
+				},
+				finishWebsite: function(website) {
+					website.finish = !website.finish;
+					if (website.finish) website.btnSelected = 'btn-warning';
+					else website.btnSelected = 'btn-default';
+					this.$http.post('/users/websites/remove', {id: website.id});
+				},
+
+			}
+		});
+	</script>
 @stop

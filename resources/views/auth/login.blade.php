@@ -26,6 +26,7 @@
 	</div>
 	<div class="form-group">
 			<button type="submit" class="btn btn-primary">Đăng nhập</button>
+			<a type="submit" class="btn btn-warning">Đăng ký</a>
 
 			<a class="btn btn-link" href="{{ url('/password/email') }}">Quên mật khẩu?</a>
 	</div>
