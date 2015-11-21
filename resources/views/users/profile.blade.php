@@ -87,7 +87,7 @@
 	                    </thead>
 	                </table>
 	                @if ($subjects0->count() == 0)
-	                	<h3>Bạn không đang họcmôn học nào</h3>
+	                	<h3>Bạn không đang học môn học nào</h3>
 	                @else
 		                @foreach ($subjects0 as $subject)
 		                	<h3><a href="/subjects/{{ $subject->id }}">{{ $subject->name }}</a></h3>
@@ -169,7 +169,7 @@
                     </ul>
 
                     <ul class="list-group">
-                    	<h3>Người</h3>
+                    	<h3>Chuyên gia</h3>
                     	@foreach ($user->created_persons as $person)
                     		<li class="list-group-item"><a href="{{ $person->link }}">{{ $person->name }}</a></li>
                     	@endforeach

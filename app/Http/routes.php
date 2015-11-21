@@ -56,7 +56,7 @@ Route::get('/subjects/{id}', 'SubjectsController@show');
 //  Users Controller
 
 Route::get('/users/profile', 'UsersController@show');
-
+Route::get('/users/{id}', 'UsersController@view_profile');
 
 
 // Authentication routes...

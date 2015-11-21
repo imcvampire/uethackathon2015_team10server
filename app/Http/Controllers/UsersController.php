@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use \Auth;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -35,6 +36,12 @@ class UsersController extends Controller
         	'subjects0',
         	'subjects1'
         ));
+    }
+
+    public function view_profile($id) {
+    	$user = User::findOrFail($id);
+
+    	return view('users.view_profile', compact('user'));
     }
 
     public function edit($id)
