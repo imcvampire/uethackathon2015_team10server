@@ -4,8 +4,6 @@
 	<meta id="token" name="token" value="{{ csrf_token() }}">
 	<meta id="s_id" name="s_id" value="{{ $subject->id }}">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="/css/selector.css">
     <style type="text/css">
     	.active {
     		background-color: green;
@@ -14,65 +12,66 @@
 @stop
     
 @section('content')
-	<div class="row">
-	    <div class="col-sm-10 col-sm-offset-1">
-	        <div id="tabs">
-	            <ul>
-	                <li><a href="#can-biet">Cần biết</a></li>
-	                <li><a href="#web">Websites</a></li>
-	                <li><a href="#nguoi">Người</a></li>
-	                <li><a href="#sach">Sách</a></li>
-	                <li><a href="#kinh-nghiem">Bình luận</a></li>
-	            </ul>
-	            <div id="can-biet">
-	                <ul class="list-group">
-	                    	<li class="list-group-item" v-for="subject in subjects.slice(0, startSubject)">
+	@include('headers.header2')
+	<div class="container" id="tabs">
+		<ul class="nav nav-tabs">
+		  <li class="active"><a data-toggle="tab" href="#subjects">Môn tiên quyết</a></li>
+		  <li><a data-toggle="tab" href="#websites">Websites</a></li>
+		  <li><a data-toggle="tab" href="#persons">Chuyên gia</a></li>
+		  <li><a data-toggle="tab" href="#books">Sách</a></li>
+		  <li><a data-toggle="tab" href="#comments">Bình luận</a></li>
+		</ul>
+		<div class="tab-content">
+		  <div id="subjects" class="tab-pane fade in active">
+		    <ul class="list-group">
+	                    <li class="list-group-item" v-for="subject in subjects.slice(0, startSubject)">
 	                    		<h3>
 		                    		<input type="checkbox" 
 		                    				name="subject_select" 
 		                    				id="subject_select" 
-		                    				v-on:change="storeSubject(subject.id)" 
+		                    				v-on:change="storeSubject(subject)" 
 			                    			v-if="subject.studied"
 			                    			checked
 			                    	>
 			                    	<input type="checkbox" 
 		                    				name="subject_select" 
 		                    				id="subject_select" 
-		                    				v-on:change="storeSubject(subject.id)" 
+		                    				v-on:change="storeSubject(subject)" 
 			                    			v-if="!subject.studied"
 			                    	>
 	                    			<a href="/subjects/{{ $subject->id }}">@{{ subject.name }}</a>
-	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="subjectLike(subject.id, subject)"></a>
+	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="subjectLike(subject)">&nbsp;@{{ subject.likes }}</a>
+	                    			<a class="btn btn-default 
+	                    			glyphicon glyphicon-check"> @{{ subject.selected }}</a>
 	                    		</h3>
-	                    		<h4>@{{ subject.selected }} lần chọn, @{{ subject.likes }} likes</h4>
-	                    		<h5>@{{ subject.totalSearch }} lần tìm kiếm</h5>
 	                    	</li>
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startSubject += 5">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
 	                <div class="clearfix"></div>
-	            </div>
-	            <div id="web">
-	                <ul class="list-group">
+		  </div>
+		  <div id="websites" class="tab-pane fade">
+		    <ul class="list-group">
 	                    	<li class="list-group-item" v-for="website in websites.slice(0, startWebsite)">
 	                    		<h3>
 		                    		<input type="checkbox" 
 		                    				name="website_select" 
 		                    				id="website_select" 
-		                    				v-on:change="storeWebsite(website.id)" 
+		                    				v-on:change="storeWebsite(website)" 
 			                    			v-if="website.studied"
 			                    			checked
 		                    		> 
 		                    		<input type="checkbox" 
 		                    				name="website_select" 
 		                    				id="website_select" 
-		                    				v-on:change="storeWebsite(website.id)" 
+		                    				v-on:change="storeWebsite(website)" 
 			                    			v-if="!website.studied"
 		                    		> 
 		                    		<a href="@{{ website.link }}">@{{ website.name }}</a> 
-		                    		<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="websiteLike(website.id, website)"></a>
+		                    		<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="websiteLike(website)">&nbsp;@{{ website.likes }}</a>
+		                    		<a class="btn btn-default 
+	                    			glyphicon glyphicon-check"> @{{ website.selected }}</a>
 	                    		</h3>
-	                    		<h4>@{{ website.selected }} lần chọn, @{{ website.likes }} likes</h4>
 	                    		<p>@{{ website.intro }}</p>
 	                    	</li>
 	                    	
@@ -80,58 +79,60 @@
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startWebsite += 5">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
 	                <div class="clearfix"></div>
-	            </div>
-	            <div id="nguoi">
-	                <ul class="list-group">
+		  </div>
+		  <div id="persons" class="tab-pane fade">
+		    <ul class="list-group">
 	                    	<li class="list-group-item" v-for="person in persons.slice(0, startPerson)">
 		                    		<h3>
 		                    			<input type="checkbox" 
 		                    				name="person_select" 
 		                    				id="person_select" 
-		                    				v-on:change="storePerson(person.id)" 
+		                    				v-on:change="storePerson(person)" 
 			                    			v-if="person.studied"
 			                    			checked
 			                    	>
 			                    	<input type="checkbox" 
 		                    				name="person_select" 
 		                    				id="person_select" 
-		                    				v-on:change="storePerson(person.id)" 
+		                    				v-on:change="storePerson(person)" 
 			                    			v-if="!person.studied"
 			                    	>
 	                    			<a href="@{{ person.link }}">@{{ person.name }}</a>
-	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="personLike(person.id, person)"></a>
+	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="personLike(person)">&nbsp;@{{ person.likes }}</a>
+	                    			<a class="btn btn-default 
+	                    			glyphicon glyphicon-check"> @{{ person.selected }}</a>
 	                    		</h3>
 	                    		<img src="@{{ person.avatar }}">
-	                    		<h4>@{{ person.selected }} lần chọn, @{{ person.likes }} likes</h4>
 	                    		<p>@{{ person.intro }}</p>
 	                    	</li>
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startPerson += 5">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
 	                <div class="clearfix"></div>
-	            </div>
-	            <div id="sach">
-	                <ul class="list-group">
+		  </div>
+		  <div id="books" class="tab-pane fade">
+		  	<ul class="list-group">
 	                    	<li class="list-group-item" v-for="book in books.slice(0, startBook)">
 	                    		<h3>
 	                    			<input type="checkbox" 
 	                    				name="book_select" 
 	                    				id="book_select" 
-	                    				v-on:change="storeBook(book.id)" 
+	                    				v-on:change="storeBook(book)" 
 		                    		 	v-if="book.studied"
 		                    			checked
 		                    		>
 		                    		<input type="checkbox" 
 		                    				name="book_select" 
 		                    				id="book_select" 
-		                    				v-on:change="storeBook(book.id)" 
+		                    				v-on:change="storeBook(book)" 
 			                    		 	v-if="!book.studied"
 		                    		>
 	                    			<a href=@{{ book.link }}>@{{ book.name }}</a>
-	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="bookLike(book.id, book)"></a>
+	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="bookLike(book)">&nbsp;@{{ book.likes }}</a>
+	                    			<a class="btn btn-default 
+	                    			glyphicon glyphicon-check"> @{{ book.selected }}</a>
 	                    		</h3>
 	                    		<img src="@{{ book.avatar }}">
-	                    		<h4>@{{ book.selected }} lần chọn, @{{ book.likes }} likes</h4>
 	                    		<h5>@{{ book.publisher }}</h5>
 	                    		<p>@{{ book.intro }}</p>
 	                    	</li>
@@ -139,39 +140,22 @@
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startBook += 5">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
 	                <div class="clearfix"></div>
-	            </div>
-	            <div id="kinh-nghiem">
-	                @include('subjects.disqus')
-	            </div>
-	        </div>
-	    </div>
-	</div>
+		  </div>
+		  <div id="comments" class="tab-pane fade">
+		  	@include('subjects.disqus')
+		  </div>
+		</div>
+		</div>
+
+	
 @stop
 
 @section('scripts')
 	<script rel="script" type="text/javascript" src="/js/jquery.min.js"></script>
-	<script rel="script" type="text/javascript" src="/js/jquery-ui.min.js"></script>
 	<script rel="script" type="text/javascript" src="/js/bootstrap.min.js"></script>
-	<script rel="script" type="text/javascript" src="/js/jquery.hc-sticky.min.js"></script>
 	<script src="/js/vue.min.js"></script>
 	<script src="/js/vue-resource.min.js"></script>
 	<script>
-	    //    tab
-	    $(function () {
-	        $("#tabs").tabs();
-	    });
-
-	    //    select
-	    $(function () {
-	        $(".select-list").selectable();
-	    });
-
-	    //    float
-	    $(function ($) {
-	        $('#selected').hcSticky({
-	            stickTo: "document"
-	        });
-	    });
 	    Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
 	    
 	    new Vue({
@@ -200,24 +184,24 @@
 		    		this.getPersons(id);
 	    		},
 
-	    		subjectLike: function(id, subject) {
+	    		subjectLike: function(subject) {
 	    			subject.likes += 1;
-	    			this.$http.post('/subjects/subjects/like', {id: id});
+	    			this.$http.post('/subjects/subjects/like', {id: subject.id});
 	    		},
 
-	    		personLike: function(id, person) {
+	    		personLike: function(person) {
 	    			person.likes += 1;
-	    			this.$http.post('/subjects/persons/like', {id: id});
+	    			this.$http.post('/subjects/persons/like', {id: person.id});
 	    		},
 
-	    		websiteLike: function(id, website) {
+	    		websiteLike: function(website) {
 	    			website.likes += 1;
-	    			this.$http.post('/subjects/websites/like', {id: id});
+	    			this.$http.post('/subjects/websites/like', {id: website.id});
 	    		},
 
-	    		bookLike: function(id, book) {
+	    		bookLike: function(book) {
 	    			book.likes += 1;
-	    			this.$http.post('/subjects/books/like', {id: id});
+	    			this.$http.post('/subjects/books/like', {id: book.id});
 	    		},
 	    	
 	    		getSubjects: function(subjectId) {
@@ -244,17 +228,22 @@
 	    				this.$set('persons', persons);
 	    			});
 	    		},
-	    		storeWebsite: function(websiteId) {
-	    			this.$http.post('/subjects/websites', {id: websiteId});
+	    		storeWebsite: function(website) {
+	    			website.selected += 1;
+	    			this.$http.post('/subjects/websites', {id: website.id});
+
 	    		},
-	    		storeSubject: function(subjectId) {
-	    			this.$http.post('/subjects/subjects', {id: subjectId});
+	    		storeSubject: function(subject) {
+	    			subject.selected += 1;
+	    			this.$http.post('/subjects/subjects', {id: subject.id});
 	    		},
-	    		storePerson: function(personId) {
-	    			this.$http.post('/subjects/persons', {id: personId});
+	    		storePerson: function(person) {
+	    			person.selected += 1;
+	    			this.$http.post('/subjects/persons', {id: person.id});
 	    		},
-	    		storeBook: function(bookId) {
-	    			this.$http.post('/subjects/books', {id: bookId});
+	    		storeBook: function(book) {
+	    			book.selected += 1;
+	    			this.$http.post('/subjects/books', {id: book.id});
 	    		}
 	    	}
 	    });
