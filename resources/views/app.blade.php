@@ -7,6 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>How to do</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <style type="text/css">
+        body {
+          padding-top: 50px;
+          padding-bottom: 20px;
+        }
+    </style>
     @yield('styles')
 </head>
 
