@@ -6,6 +6,11 @@
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/css/selector.css">
+    <style type="text/css">
+    	.active {
+    		background-color: green;
+    	}
+    </style>
 @stop
     
 @section('content')
@@ -37,7 +42,7 @@
 			                    			v-if="!subject.studied"
 			                    	>
 	                    			<a href="/subjects/{{ $subject->id }}">@{{ subject.name }}</a>
-	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="subject.selected += 1" subject.liked"></a>
+	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="subjectLike(subject.id, subject)"></a>
 	                    		</h3>
 	                    		<h4>@{{ subject.selected }} lần chọn, @{{ subject.likes }} likes</h4>
 	                    		<h5>@{{ subject.totalSearch }} lần tìm kiếm</h5>
@@ -65,7 +70,7 @@
 			                    			v-if="!website.studied"
 		                    		> 
 		                    		<a href="@{{ website.link }}">@{{ website.name }}</a> 
-		                    		<a class="btn btn-default glyphicon glyphicon-thumbs-up"></a>
+		                    		<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="websiteLike(website.id, website)"></a>
 	                    		</h3>
 	                    		<h4>@{{ website.selected }} lần chọn, @{{ website.likes }} likes</h4>
 	                    		<p>@{{ website.intro }}</p>
@@ -94,7 +99,7 @@
 			                    			v-if="!person.studied"
 			                    	>
 	                    			<a href="@{{ person.link }}">@{{ person.name }}</a>
-	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up"></a>
+	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="personLike(person.id, person)"></a>
 	                    		</h3>
 	                    		<img src="@{{ person.avatar }}">
 	                    		<h4>@{{ person.selected }} lần chọn, @{{ person.likes }} likes</h4>
@@ -123,7 +128,7 @@
 			                    		 	v-if="!book.studied"
 		                    		>
 	                    			<a href=@{{ book.link }}>@{{ book.name }}</a>
-	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up"></a>
+	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="bookLike(book.id, book)"></a>
 	                    		</h3>
 	                    		<img src="@{{ book.avatar }}">
 	                    		<h4>@{{ book.selected }} lần chọn, @{{ book.likes }} likes</h4>
@@ -187,11 +192,32 @@
 	    		this.initialize(id);
 	    	},
 	    	methods: {
+
 	    		initialize: function(id) {
 	    			this.getSubjects(id);
 		    		this.getBooks(id);
 		    		this.getWebsites(id);
 		    		this.getPersons(id);
+	    		},
+
+	    		subjectLike: function(id, subject) {
+	    			subject.likes += 1;
+	    			this.$http.post('/subjects/subjects/like', {id: id});
+	    		},
+
+	    		personLike: function(id, person) {
+	    			person.likes += 1;
+	    			this.$http.post('/subjects/persons/like', {id: id});
+	    		},
+
+	    		websiteLike: function(id, website) {
+	    			website.likes += 1;
+	    			this.$http.post('/subjects/websites/like', {id: id});
+	    		},
+
+	    		bookLike: function(id, book) {
+	    			book.likes += 1;
+	    			this.$http.post('/subjects/books/like', {id: id});
 	    		},
 	    	
 	    		getSubjects: function(subjectId) {

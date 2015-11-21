@@ -1,0 +1,26 @@
+#header {
+    margin-top: 10px;
+}
+#login {
+    margin-right: 5%;
+}
+#lean_overlay {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    display: none;
+}
+#login-form {
+    position: absolute;
+    width: 40%;
+    height: auto;
+    margin: auto;
+    top: 80px;
+    background: #fff;
+    padding: 1% 0.5%;
+}
+

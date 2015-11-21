@@ -16,7 +16,7 @@
 	        <span class="col-xs-12 text-center text-info text-capitalize">{{ $user->name }}</span>
 
 	        <div class="row" id="info">
-	            <img class="col-sm-3 img-responsive img-thumbnail">
+	            <img class="col-sm-3 img-responsive img-thumbnail" src="http://www.gravatar.com/avatar/{{ md5(strtolower(trim($user->email))) }}">
 
 	            <div class="col-sm-9">
 	                <p>Tên: {{ $user->name }}</p>

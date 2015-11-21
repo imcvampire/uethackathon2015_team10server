@@ -1,16 +1,20 @@
 @extends('app')
 
 @section('content')
-	<form>
-	    <input type="search" id="search" class="form-control" placeholder="Search" v-model='query' v-on:keyup="search">
-	</form>
+    <div class="container">
+    	<form>
+            <div class="form-group">
+    	       <input type="search" id="search" class="form-control" placeholder="Search" v-model='query' v-on:keyup="search" class="form-control">
+            </div>
+    	</form>
 
-    <ul class="list-group">
-    	<li class="list-group-item" v-for="subject in subjects | orderBy 'totalSearch' -1">
-    		<h4><a href="/subjects/@{{ subject.id }}">@{{ subject.name }}</a></h4>
-    		<h3>@{{ subject.totalSearch }}</h3>
-    	</li>
-    </ul>
+        <ul class="list-group">
+        	<li class="list-group-item" v-for="subject in subjects | orderBy 'totalSearch' -1">
+        		<h4><a href="/subjects/@{{ subject.id }}">@{{ subject.name }}</a></h4>
+        		<h3>@{{ subject.totalSearch }}</h3>
+        	</li>
+        </ul>
+    </div>
 @stop
 
 @section('scripts')
@@ -19,6 +23,7 @@
 	<script src="/js/vue.min.js"></script>
 	<script src="/js/algoliasearch.min.js"></script>
 	<script>
+        
 		new Vue({
             el: 'body',
             data: { query: '', subjects: [] },
