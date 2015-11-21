@@ -22,7 +22,7 @@ class Subject extends Model
     	return $this->belongsToMany('App\Subject', 'subject_subject', 'main_subject_id', 'recommend_subject_id');
     }
 
-    public function advanced_subject() {
+    public function advanced_subjects() {
     	return $this->belongsToMany('App\Subject', 'subject_subject', 'recommend_subject_id', 'main_subject_id');
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Subject;
 use App\User;
 use App\Comment;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class ArticlesController extends Controller
     public function ask() {
         return view('articles.ask');
     }
-    
+
     // save comment to an article
     public function saveComment(Request $request, $id){
         $article = Article::findOrFail($id);

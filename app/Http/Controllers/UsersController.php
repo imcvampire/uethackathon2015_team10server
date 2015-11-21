@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use \Auth;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -20,19 +21,27 @@ class UsersController extends Controller
     {
         $user = $this->user;
 
-        $books = $user->studied_books();
+        $books = $user->studied_books()->get();
         $persons = $user->studied_persons()->get();
-        $websites = $user->studied_websites();
+        $websites = $user->studied_websites()->get();
 
-    	$subjects = $user->studied_subjects();
+    	$subjects0 = $user->studied_subjects()->where('finish', 0)->get();
+    	$subjects1 = $user->studied_subjects()->where('finish', 1)->get();
 
         return view('users.profile', compact(
         	'user', 
         	'books', 
         	'websites',
         	'persons',
-        	'subjects'
+        	'subjects0',
+        	'subjects1'
         ));
+    }
+
+    public function view_profile($id) {
+    	$user = User::findOrFail($id);
+
+    	return view('users.view_profile', compact('user'));
     }
 
     public function edit($id)

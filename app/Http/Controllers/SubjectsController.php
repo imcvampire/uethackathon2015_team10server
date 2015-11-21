@@ -33,6 +33,34 @@ class SubjectsController extends Controller
     {
         return view('subjects.create');
     }
+    public function websiteLike(Request $request) {
+        $id = $request->input('id');
+        $website = Website::findOrFail($id);
+        $website->likes++;
+        $website->save();
+    }
+
+    public function subjectLike(Request $request) {
+        $id = $request->input('id');
+        $subject = Subject::findOrFail($id);
+        $subject->likes++;
+        $subject->save();
+    }
+
+    public function bookLike(Request $request) {
+        $id = $request->input('id');
+        $book = Website::findOrFail($id);
+        $book->likes++;
+        $book->save();
+    }
+
+    public function personLike(Request $request) {
+        $id = $request->input('id');
+        $person = Person::findOrFail($id);
+        $person->likes++;
+        $person->save();
+    }
+
 
     public function storeWebsite(Request $request) {
         $id = $request->input('id');
@@ -40,11 +68,13 @@ class SubjectsController extends Controller
         $w = $this->user->studied_websites()->where('id', $id);
         if ($w->count() > 0) {
             $w->detach($id);
-            $website->update(['selected', $website->selected - 1]);
+            $website->selected--;
+            $website->save();
             return 'Delete';
         }
         $this->user->studied_websites()->attach($id);
-        $website->update(['selected', $website->selected + 1]);
+        $website->selected++;
+        $website->save();
         return 'Done!';
     }
 
@@ -53,9 +83,13 @@ class SubjectsController extends Controller
         $person = $this->user->studied_persons()->where('id', $id);
         if ($person->count() > 0) {
             $person->detach($id);
+            $person->selected--;
+            $person->save();
             return 'Delete';
         }
         $this->user->studied_persons()->attach($id);
+        $person->selected++;
+        $person->save();
         return 'Done!';
     }
 
@@ -63,10 +97,14 @@ class SubjectsController extends Controller
         $id = $request->input('id');
         $book = $this->user->studied_books()->where('id', $id);
         if ($book->count() > 0) {
+            $book->selected--;
+            $book->save();
             $book->detach($id);
             return 'Delete';
         }
         $this->user->studied_books()->attach($id);
+        $book->selected++;
+        $book->save();
         return 'Done!';
     }
 
@@ -74,10 +112,14 @@ class SubjectsController extends Controller
         $id = $request->input('id');
         $subject = $this->user->studied_subjects()->where('id', $id);
         if ($subject->count() > 0) {
+            $subject->selected--;
+            $subject->save();
             $subject->detach($id);
             return 'Delete';
         }
         $this->user->studied_subjects()->attach($id);
+        $subject->selected++;
+        $subject->save();
         return 'Done!';
     }
 
