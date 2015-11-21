@@ -21,7 +21,7 @@
 	<div class="container">
 	    <div class="row">
 
-	        <div class="row" id="info">
+	        <div id="info" class="col-xs-12 col-md-5">
 	            <img class="col-xs-4 col-xs-offset-4 img-responsive img-thumbnail" src="http://www.gravatar.com/avatar/{{ md5(strtolower(trim($user->email))) }}" style="width: 200px">
 
 	            <div class="col-xs-4 col-xs-offset-4">
@@ -32,11 +32,11 @@
 	                <p><b>Điểm số</b>: {{ $user->score }}</p>
 
 	            </div> <!-- .col-sm-9 -->
-	        </div> <!-- .row #info -->
+	        </div> <!--  #info -->
 
 
     
-	<div class="container" id="tabs">
+	<div class="col-xs-12 col-md-7" id="tabs">
 		<ul class="nav nav-tabs">
 		  <li><a data-toggle="tab" href="#unfinished">Đang học</a></li>
 		  <li><a data-toggle="tab" href="#finished">Đã hoàn thành</a></li>

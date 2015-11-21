@@ -59,11 +59,12 @@ Route::get('/subjects/{id}', 'SubjectsController@show');
 //  Users Controller
 
 Route::get('/users/profile', 'UsersController@show');
-Route::get('/users/{id}', 'UsersController@view_profile');
 Route::post('/users/books', 'UsersController@moreBooks');
 Route::post('/users/websites', 'UsersController@moreWebsites');
 Route::post('/users/books/remove', 'UsersController@removeBook');
 Route::post('/users/websites/remove', 'UsersController@removeWebsite');
+
+Route::get('/users/{id}', 'UsersController@view_profile');
 
 
 // ArticlesController
