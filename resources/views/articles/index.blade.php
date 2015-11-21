@@ -1,6 +1,8 @@
-@extends('articles.boostrap')
+@extends('app')
 
 @section('content')
+    @include('headers.header2')
+    <div class="container">
     <h1>Articles</h1>
 
     <a href="articles/create" class="btn btn-info" role="button">Send new article</a>
@@ -15,5 +17,6 @@
             </article>
         </div>
     @endforeach
+    </div>
     </div>
 @stop

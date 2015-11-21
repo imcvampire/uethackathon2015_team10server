@@ -1,6 +1,7 @@
-@extends('articles.boostrap')
+@extends('app')
 
 @section('content')
+    @include('headers.header2')
     <h1>Articles</h1>
 
     <a href="articles/create" class="btn btn-info" role="button">Send new article</a>

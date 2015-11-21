@@ -1,6 +1,7 @@
-@extends('articles.boostrap')
+@extends('app')
 
 @section('content')
+    @include('headers.header2')
     <h1>Edit: {!! $article->title !!}</h1>
     {!! Form::model($article,['method' => 'PATCH', 'action' => ['ArticlesController@update', $article->id]]) !!}
     @include('articles.form',['submitButtonText' => 'Edit']);

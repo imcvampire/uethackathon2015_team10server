@@ -28,8 +28,7 @@
 	                    	</li>
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startSubject += 5">Xem thêm</button>
-	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
-	                <div class="clearfix"></div>
+	                <a href="/articles/create" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
 		  </div>
 		  <div id="websites" class="tab-pane fade">
 		    <ul class="list-group">
@@ -45,7 +44,7 @@
 	                    	
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startWebsite += 5">Xem thêm</button>
-	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
+	                <a href="/articles/create" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
 		  </div>
 		  <div id="persons" class="tab-pane fade">
 		    <ul class="list-group">
@@ -61,8 +60,7 @@
 	                    	</li>
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startPerson += 5">Xem thêm</button>
-	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
-	                <div class="clearfix"></div>
+	                <a href="/articles/create" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
 		  </div>
 		  <div id="books" class="tab-pane fade">
 		  	<ul class="list-group">
@@ -79,8 +77,7 @@
 	                    	</li>
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startBook += 5">Xem thêm</button>
-	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
-	                <div class="clearfix"></div>
+	                <a href="/articles/create" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
 		  </div>
 		  <div id="comments" class="tab-pane fade">
 		  	@include('subjects.disqus')

@@ -1,6 +1,7 @@
-@extends('articles.boostrap')
+@extends('app')
 
 @section('content')
+    @include('headers.header2')
     <div class="jumbotron">
         <h2>Title: {{$article ->title}}</h2>
         <article>
