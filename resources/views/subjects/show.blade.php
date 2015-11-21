@@ -48,7 +48,7 @@
 	                    	
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startWebsite += 5">Xem thêm</button>
-	                <a href="/articles/create" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
+	                <a href="/subjects/{{ $subject->id }}/add_website" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
 		  </div>
 		  <div id="persons" class="tab-pane fade">
 		    <ul class="list-group">
@@ -65,7 +65,8 @@
 	                    		<p>@{{ person.intro }}</p>
 	                    	</li>
 	                </ul>
-	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startPerson += 5">Xem thêm</button>	                <a href="/articles/create" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
+	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startPerson += 5">Xem thêm</button>	                
+	                <a href="/subjects/{{ $subject->id }}/add_person" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
 		  </div>
 		  <div id="books" class="tab-pane fade">
 		  	<ul class="list-group">
@@ -84,7 +85,7 @@
 	                    	</li>
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startBook += 5">Xem thêm</button>
-	                <a href="/articles/create" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
+	                <a href="/subjects/{{ $subject->id }}/add_book" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
 		  </div>
 		  <div id="comments" class="tab-pane fade">
 		  	@include('subjects.disqus')

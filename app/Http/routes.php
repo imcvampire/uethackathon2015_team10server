@@ -80,3 +80,11 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+Route::get('subjects/{id}/add_book', 'SubjectsController@add_book');
+Route::get('subjects/{id}/add_person', 'SubjectsController@add_person');
+Route::get('subjects/{id}/add_website', 'SubjectsController@add_website');
+
+Route::post('subjects/{id}/save_book', 'SubjectsController@save_book');
+Route::post('subjects/{id}/save_person', 'SubjectsController@save_person');
+Route::post('subjects/{id}/save_website', 'SubjectsController@save_website');
