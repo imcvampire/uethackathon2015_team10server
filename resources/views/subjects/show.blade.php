@@ -2,6 +2,7 @@
 
 @section('styles')
 	<meta id="token" name="token" value="{{ csrf_token() }}">
+	<meta id="s_id" name="s_id" value="{{ $subject->id }}">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/css/selector.css">
@@ -9,119 +10,135 @@
     
 @section('content')
 	<div class="row">
-	    <div class="col-sm-9">
+	    <div class="col-sm-10 col-sm-offset-1">
 	        <div id="tabs">
 	            <ul>
 	                <li><a href="#can-biet">Cần biết</a></li>
-	                <li><a href="#web">Web</a></li>
+	                <li><a href="#web">Websites</a></li>
 	                <li><a href="#nguoi">Người</a></li>
 	                <li><a href="#sach">Sách</a></li>
-	                <li><a href="#kinh-nghiem">Kinh nghiệm</a></li>
+	                <li><a href="#kinh-nghiem">Bình luận</a></li>
 	            </ul>
 	            <div id="can-biet">
-	                <ul class="select-list">
-	                    @foreach ($recommend_subjects as $recommend_subject)
-	                    	<li>
-	                    		<input type="checkbox" 
-	                    				name="recommend_subject_select" 
-	                    				id="recommend_subject_select" 
-	                    				v-on:change="storeSubject({{ $recommend_subject->id }})" 
-		                    		@if (\Auth::user()->studied_subjects()->where('subject_id', $subject->id)->count() > 0)
-		                    			checked
-		                    		@endif
-	                    		>
-	                    		<h4><a href="/subjects/{{ $subject->id }}">{{ $recommend_subject->name }}</a></h4>
-	                    		<h3>{{ $recommend_subject->selected }} selected, {{ $recommend_subject->likes }} likes</h3>
+	                <ul class="list-group">
+	                    	<li class="list-group-item" v-for="subject in subjects.slice(0, startSubject)">
+	                    		<h3>
+		                    		<input type="checkbox" 
+		                    				name="subject_select" 
+		                    				id="subject_select" 
+		                    				v-on:change="storeSubject(subject.id)" 
+			                    			v-if="subject.studied"
+			                    			checked
+			                    	>
+			                    	<input type="checkbox" 
+		                    				name="subject_select" 
+		                    				id="subject_select" 
+		                    				v-on:change="storeSubject(subject.id)" 
+			                    			v-if="!subject.studied"
+			                    	>
+	                    			<a href="/subjects/{{ $subject->id }}">@{{ subject.name }}</a>
+	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="subject.selected += 1" subject.liked"></a>
+	                    		</h3>
+	                    		<h4>@{{ subject.selected }} lần chọn, @{{ subject.likes }} likes</h4>
+	                    		<h5>@{{ subject.totalSearch }} lần tìm kiếm</h5>
 	                    	</li>
-	                    @endforeach
 	                </ul>
-	                <button type="submit" class="btn btn-success pull-left btn-select">Xem thêm</button>
+	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startSubject += 5">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
 	                <div class="clearfix"></div>
 	            </div>
 	            <div id="web">
-	                <ul class="select-list">
-	                	@foreach ($websites as $website)
-	                    	<li>
-	                    		
-	                    		<input type="checkbox" 
-	                    				name="website_select" 
-	                    				id="website_select" 
-	                    				v-on:change="storeWebsite({{ $website->id }})" 
-		                    		@if (\Auth::user()->studied_websites()->where('website_id', $website->id)->count() > 0)
-		                    			checked
-		                    		@endif
-	                    		>
-	                    		<h4><a href="{{ $website->link }}">{{ $website->name }}</a></h4>
-	                    		<h3>{{ $website->selected }} selected, {{ $website->likes }} likes</h3>
-	                    		<p>{{ $website->intro }}</p>
+	                <ul class="list-group">
+	                    	<li class="list-group-item" v-for="website in websites.slice(0, startWebsite)">
+	                    		<h3>
+		                    		<input type="checkbox" 
+		                    				name="website_select" 
+		                    				id="website_select" 
+		                    				v-on:change="storeWebsite(website.id)" 
+			                    			v-if="website.studied"
+			                    			checked
+		                    		> 
+		                    		<input type="checkbox" 
+		                    				name="website_select" 
+		                    				id="website_select" 
+		                    				v-on:change="storeWebsite(website.id)" 
+			                    			v-if="!website.studied"
+		                    		> 
+		                    		<a href="@{{ website.link }}">@{{ website.name }}</a> 
+		                    		<a class="btn btn-default glyphicon glyphicon-thumbs-up"></a>
+	                    		</h3>
+	                    		<h4>@{{ website.selected }} lần chọn, @{{ website.likes }} likes</h4>
+	                    		<p>@{{ website.intro }}</p>
 	                    	</li>
-	                    @endforeach
+	                    	
 	                </ul>
-	                <button type="submit" class="btn btn-success pull-left btn-select">Xem thêm</button>
+	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startWebsite += 5">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
 	                <div class="clearfix"></div>
 	            </div>
 	            <div id="nguoi">
-	                <ul class="select-list">
-	                    @foreach ($persons as $person)
-	                    	<li>
-	                    		<input type="checkbox" 
-	                    				name="person_select" 
-	                    				id="person_select" 
-	                    				v-on:change="storePerson({{ $person->id }})" 
-		                    		@if (\Auth::user()->studied_persons()->where('person_id', $person->id)->count() > 0)
-		                    			checked
-		                    		@endif
-	                    		>
-	                    		<h4><a href="{{ $person->link }}">{{ $person->name }}</a></h4>
-	                    		<img src="{{ $person->avatar }}">
-	                    		<h3>{{ $website->selected }} selected, {{ $website->likes }} likes</h3>
-	                    		<p>{{ $website->intro }}</p>
+	                <ul class="list-group">
+	                    	<li class="list-group-item" v-for="person in persons.slice(0, startPerson)">
+		                    		<h3>
+		                    			<input type="checkbox" 
+		                    				name="person_select" 
+		                    				id="person_select" 
+		                    				v-on:change="storePerson(person.id)" 
+			                    			v-if="person.studied"
+			                    			checked
+			                    	>
+			                    	<input type="checkbox" 
+		                    				name="person_select" 
+		                    				id="person_select" 
+		                    				v-on:change="storePerson(person.id)" 
+			                    			v-if="!person.studied"
+			                    	>
+	                    			<a href="@{{ person.link }}">@{{ person.name }}</a>
+	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up"></a>
+	                    		</h3>
+	                    		<img src="@{{ person.avatar }}">
+	                    		<h4>@{{ person.selected }} lần chọn, @{{ person.likes }} likes</h4>
+	                    		<p>@{{ person.intro }}</p>
 	                    	</li>
-	                    @endforeach
 	                </ul>
-	                <button type="submit" class="btn btn-success pull-left btn-select">Xem thêm</button>
+	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startPerson += 5">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
 	                <div class="clearfix"></div>
 	            </div>
 	            <div id="sach">
-	                <ul class="select-list">
-	                    @foreach ($books as $book)
-	                    	<li>
-	                    		<input type="checkbox" 
+	                <ul class="list-group">
+	                    	<li class="list-group-item" v-for="book in books.slice(0, startBook)">
+	                    		<h3>
+	                    			<input type="checkbox" 
 	                    				name="book_select" 
 	                    				id="book_select" 
-	                    				v-on:change="storeBook({{ $book->id }})" 
-		                    		@if (\Auth::user()->studied_books()->where('book_id', $book->id)->count() > 0)
+	                    				v-on:change="storeBook(book.id)" 
+		                    		 	v-if="book.studied"
 		                    			checked
-		                    		@endif
-	                    		>
-	                    		<h4>{{ $book->name }}</a></h4>
-	                    		<img src="{{ $book->avatar }}">
-	                    		<h3>{{ $book->selected }} selected, {{ $book->likes }} likes</h3>
-	                    		<h5>{{ $book->publisher }}</h5>
-	                    		<p>{{ $book->intro }}</p>
+		                    		>
+		                    		<input type="checkbox" 
+		                    				name="book_select" 
+		                    				id="book_select" 
+		                    				v-on:change="storeBook(book.id)" 
+			                    		 	v-if="!book.studied"
+		                    		>
+	                    			<a href=@{{ book.link }}>@{{ book.name }}</a>
+	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up"></a>
+	                    		</h3>
+	                    		<img src="@{{ book.avatar }}">
+	                    		<h4>@{{ book.selected }} lần chọn, @{{ book.likes }} likes</h4>
+	                    		<h5>@{{ book.publisher }}</h5>
+	                    		<p>@{{ book.intro }}</p>
 	                    	</li>
-	                    @endforeach
 	                </ul>
-	                <button type="submit" class="btn btn-success pull-left btn-select">Xem thêm</button>
+	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startBook += 5">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
 	                <div class="clearfix"></div>
 	            </div>
 	            <div id="kinh-nghiem">
-	                <!-- Disqus -->
+	                @include('subjects.disqus')
 	            </div>
 	        </div>
-	    </div>
-	    <div class="col-sm-3">
-	        <div id="selected">
-	            <div id="selected-list">
-	                <p class="text-center">Bạn đã chọn</p>
-	            </div>
-	            <button type="submit" id="selected-save" class="btn btn-block btn-success">Save</button>
-	        </div>
-
 	    </div>
 	</div>
 @stop
@@ -151,12 +168,56 @@
 	        });
 	    });
 	    Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
+	    
 	    new Vue({
 	    	el: '#tabs',
 	    	data: {
-
+	    		id: 0,
+	    		startSubject: 5,
+	    		subjects: [],
+	    		startBook: 5,
+	    		books: [],
+	    		startPerson: 5,
+	    		persons: [],
+	    		startWebsite: 5,
+	    		websites: [],
+	    	},
+	    	ready: function() {
+	    		var id = document.querySelector('#s_id').getAttribute('value');
+	    		this.initialize(id);
 	    	},
 	    	methods: {
+	    		initialize: function(id) {
+	    			this.getSubjects(id);
+		    		this.getBooks(id);
+		    		this.getWebsites(id);
+		    		this.getPersons(id);
+	    		},
+	    	
+	    		getSubjects: function(subjectId) {
+	    			if (this.subjects.length > 0) return;
+	    			this.$http.post('/subjects/subjects/more', {id: subjectId, start: this.startSubject}, function(subjects) {
+	    				this.$set('subjects', subjects);
+	    			});
+	    		},
+	    		getBooks: function(id) {
+	    			if (this.books.length > 0) return;
+	    			this.$http.post('/subjects/books/more', {id: id, start: this.startBook}, function(books) {
+	    				this.$set('books', books);
+	    			});
+	    		},
+	    		getWebsites: function(id) {
+	    			if (this.websites.length > 0) return;
+	    			this.$http.post('/subjects/websites/more', {id: id, start: this.startWebsite}, function(websites) {
+	    				this.$set('websites', websites);
+	    			});
+	    		},
+	    		getPersons: function(id) {
+	    			if (this.persons.length > 0) return;
+	    			this.$http.post('/subjects/persons/more', {id: id, start: this.startSubject}, function(persons) {
+	    				this.$set('persons', persons);
+	    			});
+	    		},
 	    		storeWebsite: function(websiteId) {
 	    			this.$http.post('/subjects/websites', {id: websiteId});
 	    		},

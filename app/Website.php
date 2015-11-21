@@ -25,6 +25,6 @@ class Website extends Model
     }
 
     public function users() {
-    	return $this->belongsToMany('App\User');
+    	return $this->belongsToMany('App\User', 'user_website', 'website_id', 'user_id')->withPivot('finish');
     }
 }

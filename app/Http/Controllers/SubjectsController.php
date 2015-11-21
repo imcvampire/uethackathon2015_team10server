@@ -27,7 +27,6 @@ class SubjectsController extends Controller
     public function index()
     {
         $subjects = Subject::all();
-       // return view('subjects.index', compact('subjects'));
     }
 
     public function create()
@@ -37,16 +36,19 @@ class SubjectsController extends Controller
 
     public function storeWebsite(Request $request) {
         $id = $request->input('id');
-        $website = $this->user->studied_websites()->where('id', $id);
-        if ($website->count() > 0) {
-            $website->detach($id);
+        $website = Website::findOrFail($id);
+        $w = $this->user->studied_websites()->where('id', $id);
+        if ($w->count() > 0) {
+            $w->detach($id);
+            $website->update(['selected', $website->selected - 1]);
             return 'Delete';
         }
         $this->user->studied_websites()->attach($id);
+        $website->update(['selected', $website->selected + 1]);
         return 'Done!';
     }
 
-    public function storePerson(Request $request) {
+     public function storePerson(Request $request) {
         $id = $request->input('id');
         $person = $this->user->studied_persons()->where('id', $id);
         if ($person->count() > 0) {
@@ -71,7 +73,7 @@ class SubjectsController extends Controller
     public function storeSubject(Request $request) {
         $id = $request->input('id');
         $subject = $this->user->studied_subjects()->where('id', $id);
-        if ($subjecct->count() > 0) {
+        if ($subject->count() > 0) {
             $subject->detach($id);
             return 'Delete';
         }
@@ -80,12 +82,59 @@ class SubjectsController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+     public function morePersons(Request $request) {
+        $id = $request->input('id');
+        $subject = Subject::findOrFail($id);
+        $persons = $subject->persons()
+                            ->orderBy('selected', 'desc')
+                            ->orderBy('likes', 'desc')->get();
+        foreach ($persons as $person)
+            if ($this->user->studied_persons()->find($person->id) != null)
+                $person->studied = false;
+            else $person->studied = true;
+        return $persons;
+    }
+
+    public function moreWebsites(Request $request) {
+        $id = $request->input('id');;
+        $subject = Subject::findOrFail($id);
+        $websites = $subject->websites()
+                            ->orderBy('selected', 'desc')
+                            ->orderBy('likes', 'desc')->get();
+        foreach ($websites as $website)
+            if ($this->user->studied_websites()->find($website->id) != null)
+                $website->studied = false;
+            else $website->studied = true;
+
+        return $websites;
+    }
+
+     public function moreBooks(Request $request) {
+        $id = $request->input('id');
+        $subject = Subject::findOrFail($id);
+        $books = $subject->books()
+                            ->orderBy('selected', 'desc')
+                            ->orderBy('likes', 'desc')->get();
+        foreach ($books as $book)
+            if ($this->user->studied_books()->find($book->id) != null)
+                $book->studied = false;
+            else $book->studied = true;
+        return $books;
+    }
+
+     public function moreSubjects(Request $request) {
+        $id = $request->input('id');
+        $subject = Subject::findOrFail($id);
+        $subjects = $subject->recommend_subjects()
+                            ->orderBy('selected', 'desc')
+                            ->orderBy('likes', 'desc')->get();
+        foreach ($subjects as $subject)
+            if ($this->user->studied_subjects()->find($subject->id) != null)
+                $subject->studied = false;
+            else $subject->studied = true;
+        return $subjects;
+    }
+
     public function show($id)
     {
         $subject = Subject::findOrFail($id);
