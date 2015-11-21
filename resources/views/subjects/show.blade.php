@@ -4,12 +4,6 @@
 	<meta id="token" name="token" value="{{ csrf_token() }}">
 	<meta id="s_id" name="s_id" value="{{ $subject->id }}">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-    <style type="text/css">
-    	.active {
-    		background-color: green;
-    	}
-    </style>
-@stop
     
 @section('content')
 	@include('headers.header2')
@@ -26,23 +20,10 @@
 		    <ul class="list-group">
 	                    <li class="list-group-item" v-for="subject in subjects.slice(0, startSubject)">
 	                    		<h3>
-		                    		<input type="checkbox" 
-		                    				name="subject_select" 
-		                    				id="subject_select" 
-		                    				v-on:change="storeSubject(subject)" 
-			                    			v-if="subject.studied"
-			                    			checked
-			                    	>
-			                    	<input type="checkbox" 
-		                    				name="subject_select" 
-		                    				id="subject_select" 
-		                    				v-on:change="storeSubject(subject)" 
-			                    			v-if="!subject.studied"
-			                    	>
 	                    			<a href="/subjects/{{ $subject->id }}">@{{ subject.name }}</a>
-	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="subjectLike(subject)">&nbsp;@{{ subject.likes }}</a>
-	                    			<a class="btn btn-default 
-	                    			glyphicon glyphicon-check"> @{{ subject.selected }}</a>
+	                    			<a class="btn glyphicon glyphicon-thumbs-up @{{ subject.btnLike }}" v-on:click="subjectLike(subject)" >&nbsp;@{{ subject.likes }}</a>
+	                    			<a class="btn @{{ subject.btnSelected }} 
+	                    			glyphicon glyphicon-check" v-on:click="storeSubject(subject)"> @{{ subject.selected }}</a>
 	                    		</h3>
 	                    	</li>
 	                </ul>
@@ -54,23 +35,10 @@
 		    <ul class="list-group">
 	                    	<li class="list-group-item" v-for="website in websites.slice(0, startWebsite)">
 	                    		<h3>
-		                    		<input type="checkbox" 
-		                    				name="website_select" 
-		                    				id="website_select" 
-		                    				v-on:change="storeWebsite(website)" 
-			                    			v-if="website.studied"
-			                    			checked
-		                    		> 
-		                    		<input type="checkbox" 
-		                    				name="website_select" 
-		                    				id="website_select" 
-		                    				v-on:change="storeWebsite(website)" 
-			                    			v-if="!website.studied"
-		                    		> 
 		                    		<a href="@{{ website.link }}">@{{ website.name }}</a> 
-		                    		<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="websiteLike(website)">&nbsp;@{{ website.likes }}</a>
-		                    		<a class="btn btn-default 
-	                    			glyphicon glyphicon-check"> @{{ website.selected }}</a>
+		                    		<a class="btn glyphicon glyphicon-thumbs-up @{{ website.btnLike }}" v-on:click="websiteLike(website)" >&nbsp;@{{ website.likes }}</a>
+	                    			<a class="btn @{{ website.btnSelected }} 
+	                    			glyphicon glyphicon-check" v-on:click="storeWebsite(website)"> @{{ website.selected }}</a>
 	                    		</h3>
 	                    		<p>@{{ website.intro }}</p>
 	                    	</li>
@@ -78,29 +46,15 @@
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startWebsite += 5">Xem thêm</button>
 	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
-	                <div class="clearfix"></div>
 		  </div>
 		  <div id="persons" class="tab-pane fade">
 		    <ul class="list-group">
 	                    	<li class="list-group-item" v-for="person in persons.slice(0, startPerson)">
 		                    		<h3>
-		                    			<input type="checkbox" 
-		                    				name="person_select" 
-		                    				id="person_select" 
-		                    				v-on:change="storePerson(person)" 
-			                    			v-if="person.studied"
-			                    			checked
-			                    	>
-			                    	<input type="checkbox" 
-		                    				name="person_select" 
-		                    				id="person_select" 
-		                    				v-on:change="storePerson(person)" 
-			                    			v-if="!person.studied"
-			                    	>
 	                    			<a href="@{{ person.link }}">@{{ person.name }}</a>
-	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="personLike(person)">&nbsp;@{{ person.likes }}</a>
-	                    			<a class="btn btn-default 
-	                    			glyphicon glyphicon-check"> @{{ person.selected }}</a>
+	                    			<a class="btn glyphicon glyphicon-thumbs-up @{{ person.btnLike }}" v-on:click="personLike(person)" >&nbsp;@{{ person.likes }}</a>
+	                    			<a class="btn @{{ person.btnSelected }} 
+	                    			glyphicon glyphicon-check" v-on:click="storePerson(person)"> @{{ person.selected }}</a>
 	                    		</h3>
 	                    		<img src="@{{ person.avatar }}">
 	                    		<p>@{{ person.intro }}</p>
@@ -114,23 +68,10 @@
 		  	<ul class="list-group">
 	                    	<li class="list-group-item" v-for="book in books.slice(0, startBook)">
 	                    		<h3>
-	                    			<input type="checkbox" 
-	                    				name="book_select" 
-	                    				id="book_select" 
-	                    				v-on:change="storeBook(book)" 
-		                    		 	v-if="book.studied"
-		                    			checked
-		                    		>
-		                    		<input type="checkbox" 
-		                    				name="book_select" 
-		                    				id="book_select" 
-		                    				v-on:change="storeBook(book)" 
-			                    		 	v-if="!book.studied"
-		                    		>
 	                    			<a href=@{{ book.link }}>@{{ book.name }}</a>
-	                    			<a class="btn btn-default glyphicon glyphicon-thumbs-up" v-on:click="bookLike(book)">&nbsp;@{{ book.likes }}</a>
-	                    			<a class="btn btn-default 
-	                    			glyphicon glyphicon-check"> @{{ book.selected }}</a>
+	                    			<a class="btn glyphicon glyphicon-thumbs-up @{{ book.btnLike }}" v-on:click="bookLike(book)" >&nbsp;@{{ book.likes }}</a>
+	                    			<a class="btn @{{ book.btnSelected }} 
+	                    			glyphicon glyphicon-check" v-on:click="storeBook(book)"> @{{ book.selected }}</a>
 	                    		</h3>
 	                    		<img src="@{{ book.avatar }}">
 	                    		<h5>@{{ book.publisher }}</h5>
@@ -185,64 +126,154 @@
 	    		},
 
 	    		subjectLike: function(subject) {
-	    			subject.likes += 1;
+	    			if (!subject.likeChange) {
+	    				subject.likes += 1;
+	    				subject.btnLike = 'btn-success';
+	    			}
+	    			else {
+	    				subject.likes -= 1;
+	    				subject.btnLike = 'btn-default';
+	    			}
+	    			subject.likeChange = !subject.likeChange;
 	    			this.$http.post('/subjects/subjects/like', {id: subject.id});
 	    		},
 
 	    		personLike: function(person) {
-	    			person.likes += 1;
+	    			if (!person.likeChange) {
+	    				person.likes += 1;
+	    				person.btnLike = 'btn-success';
+	    			}
+	    			else {
+	    				person.likes -= 1;
+	    				person.btnLike = 'btn-default';
+	    			}
+	    			person.likeChange = !person.likeChange;
 	    			this.$http.post('/subjects/persons/like', {id: person.id});
 	    		},
 
 	    		websiteLike: function(website) {
-	    			website.likes += 1;
+	    			if (!website.likeChange) {
+	    				website.likes += 1;
+	    				website.btnLike = 'btn-success';
+	    			}
+	    			else {
+	    				website.likes -= 1;
+	    				website.btnLike = 'btn-default';
+	    			}
+	    			website.likeChange = !website.likeChange;
 	    			this.$http.post('/subjects/websites/like', {id: website.id});
 	    		},
 
 	    		bookLike: function(book) {
-	    			book.likes += 1;
+	    			if (!book.likeChange) {
+	    				book.likes += 1;
+	    				book.btnLike = 'btn-success';
+	    			}
+	    			else {
+	    				book.likes -= 1;
+	    				book.btnLike = 'btn-default';
+	    			}
+	    			book.likeChange = !book.likeChange;
 	    			this.$http.post('/subjects/books/like', {id: book.id});
 	    		},
 	    	
 	    		getSubjects: function(subjectId) {
 	    			if (this.subjects.length > 0) return;
 	    			this.$http.post('/subjects/subjects/more', {id: subjectId, start: this.startSubject}, function(subjects) {
+	    				for (var i = 0; i < subjects.length; ++i) {
+	    					subjects[i].likeChange = false;
+	    					subjects[i].btnLike = 'btn-default';
+	    					subjects[i].btnSelected = 'btn-default';
+	    					if (subjects[i].studied)
+	    						subjects[i].btnSelected = 'btn-info';
+	    				}
 	    				this.$set('subjects', subjects);
 	    			});
 	    		},
 	    		getBooks: function(id) {
 	    			if (this.books.length > 0) return;
 	    			this.$http.post('/subjects/books/more', {id: id, start: this.startBook}, function(books) {
+	    				for (var i = 0; i < books.length; ++i) {
+	    					books[i].likeChange = false;
+	    					books[i].btnLike = 'btn-default';
+	    					books[i].btnSelected = 'btn-default';
+	    					if (books[i].studied)
+	    						books[i].btnSelected = 'btn-info';
+	    				}
 	    				this.$set('books', books);
 	    			});
 	    		},
 	    		getWebsites: function(id) {
 	    			if (this.websites.length > 0) return;
 	    			this.$http.post('/subjects/websites/more', {id: id, start: this.startWebsite}, function(websites) {
+	    				for (var i = 0; i < websites.length; ++i) {
+	    					websites[i].likeChange = false;
+	    					websites[i].btnLike = 'btn-default';
+	    					websites[i].btnSelected = 'btn-default';
+	    					if (websites[i].studied)
+	    						websites[i].btnSelected = 'btn-info';
+	    				}
 	    				this.$set('websites', websites);
 	    			});
 	    		},
 	    		getPersons: function(id) {
 	    			if (this.persons.length > 0) return;
 	    			this.$http.post('/subjects/persons/more', {id: id, start: this.startSubject}, function(persons) {
+	    				for (var i = 0; i < persons.length; ++i) {
+	    					persons[i].likeChange = false;
+	    					persons[i].btnLike = 'btn-default';
+	    					persons[i].btnSelected = 'btn-default';
+	    					if (persons[i].studied)
+	    						persons[i].btnSelected = 'btn-info';
+	    				}
 	    				this.$set('persons', persons);
 	    			});
 	    		},
 	    		storeWebsite: function(website) {
-	    			website.selected += 1;
+	    			if (website.studied) {
+	    				website.selected -= 1;
+	    				website.btnSelected = 'btn-default';
+	    			}
+	    			else {
+	    				website.selected += 1;
+	    				website.btnSelected = 'btn-info';
+	    			}
+	    			website.studied = !website.studied;
 	    			this.$http.post('/subjects/websites', {id: website.id});
-
 	    		},
 	    		storeSubject: function(subject) {
-	    			subject.selected += 1;
-	    			this.$http.post('/subjects/subjects', {id: subject.id});
+	    			if (subject.studied) {
+	    				subject.selected -= 1;
+	    				subject.btnSelected = 'btn-default';
+	    			}
+	    			else {
+	    				subject.selected += 1;
+	    				subject.btnSelected = 'btn-info';
+	    			}
+	    			subject.studied = !subject.studied;
 	    		},
 	    		storePerson: function(person) {
-	    			person.selected += 1;
+	    			if (person.studied) {
+	    				person.selected -= 1;
+	    				person.btnSelected = 'btn-default';
+	    			}
+	    			else {
+	    				person.selected += 1;
+	    				person.btnSelected = 'btn-info';
+	    			}
+	    			person.studied = !person.studied;
 	    			this.$http.post('/subjects/persons', {id: person.id});
 	    		},
 	    		storeBook: function(book) {
-	    			book.selected += 1;
+	    			if (book.studied) {
+	    				book.selected -= 1;
+	    				book.btnSelected = 'btn-default';
+	    			}
+	    			else {
+	    				book.selected += 1;
+	    				book.btnSelected = 'btn-info';
+	    			}
+	    			book.studied = !book.studied;
 	    			this.$http.post('/subjects/books', {id: book.id});
 	    		}
 	    	}

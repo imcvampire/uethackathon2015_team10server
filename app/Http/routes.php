@@ -62,6 +62,12 @@ Route::get('/users/profile', 'UsersController@show');
 Route::get('/users/{id}', 'UsersController@view_profile');
 
 
+// ArticlesController
+
+Route::post('articles/save_comment/{id}','ArticlesController@saveComment');
+Route::delete('articles/{id}/delete','ArticlesController@destroy');
+Route::resource('articles','ArticlesController');
+
 // Authentication routes...
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
