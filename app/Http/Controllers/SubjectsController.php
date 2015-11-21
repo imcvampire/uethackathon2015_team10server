@@ -46,6 +46,14 @@ class SubjectsController extends Controller
         return 'Done!';
     }
 
+    public function moreWebsite(Request $request) {
+        $number = $request->input('number');
+        $websites = $subject->websites()->skip($number)->take(5)
+                            ->orderBy('selected', 'desc')
+                            ->orderBy('likes', 'desc')->get();
+        return $websites;
+    }
+
     public function storePerson(Request $request) {
         $id = $request->input('id');
         $person = $this->user->studied_persons()->where('id', $id);
@@ -55,6 +63,14 @@ class SubjectsController extends Controller
         }
         $this->user->studied_persons()->attach($id);
         return 'Done!';
+    }
+
+     public function morePersons(Request $request) {
+        $number = $request->input('number');
+        $persons = $subject->persons()->skip($number)->take(5)
+                            ->orderBy('selected', 'desc')
+                            ->orderBy('likes', 'desc')->get();
+        return $websites;
     }
 
     public function storeBook(Request $request) {
@@ -68,6 +84,14 @@ class SubjectsController extends Controller
         return 'Done!';
     }
 
+     public function moreBooks(Request $request) {
+        $number = $request->input('number');
+        $books = $subject->books()->skip($number)->take(5)
+                            ->orderBy('selected', 'desc')
+                            ->orderBy('likes', 'desc')->get();
+        return $books;
+    }
+
     public function storeSubject(Request $request) {
         $id = $request->input('id');
         $subject = $this->user->studied_subjects()->where('id', $id);
@@ -77,6 +101,14 @@ class SubjectsController extends Controller
         }
         $this->user->studied_subjects()->attach($id);
         return 'Done!';
+    }
+
+     public function moreSubjects(Request $request) {
+        $number = $request->input('number');
+        $recommend_subjects = $subject->recommend_subjects()->skip($number)->take(5)
+                            ->orderBy('selected', 'desc')
+                            ->orderBy('likes', 'desc')->get();
+        return $recommend_subjects;
     }
 
 

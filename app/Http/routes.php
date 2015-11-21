@@ -36,14 +36,22 @@ Route::get('/subjects/{id}','SubjectsController@show')->where(['id' => '[0-9]+']
 
 Route::post('/subjects/websites', 'SubjectsController@storeWebsite');
 Route::post('/subjects/websites/more', 'SubjectsController@moreWebsites');
+
 Route::post('/subjects/subjects', 'SubjectsController@storeSubject');
-Route::post('/subjects/subjects/more', 'SubjectsController@moreSubject');
+Route::post('/subjects/subjects/more', 'SubjectsController@moreSubjects');
+
 Route::post('/subjects/books', 'SubjectsController@storeBook');
-Route::post('/subjects/books/more', 'SubjectsController@moreBook');
+Route::post('/subjects/books/more', 'SubjectsController@moreBooks');
+
 Route::post('/subjects/persons', 'SubjectsController@storePerson');
-Route::post('/subjects/persons/more', 'SubjectsController@morePerson');
+Route::post('/subjects/persons/more', 'SubjectsController@morePersons');
 
 Route::get('/subjects/{id}', 'SubjectsController@show');
+
+
+//  Users Controller
+
+Route::get('/users/profile', 'UsersController@show');
 
 
 

@@ -49,7 +49,7 @@ class User extends Model implements AuthenticatableContract,
     }
 
     public function studied_subjects() {
-        return $this->belongsToMany('App\Subject');
+        return $this->belongsToMany('App\Subject')->withPivot('finish');
     }
 
     public function created_books() {
@@ -65,11 +65,11 @@ class User extends Model implements AuthenticatableContract,
     }
 
     public function studied_books() {
-        return $this->belongsToMany('App\Book', 'book_user', 'user_id', 'book_id');
+        return $this->belongsToMany('App\Book', 'book_user', 'user_id', 'book_id')->withPivot('finish');
     }
 
     public function studied_websites() {
-        return $this->belongsToMany('App\Website', 'user_website', 'user_id', 'website_id');
+        return $this->belongsToMany('App\Website', 'user_website', 'user_id', 'website_id')->withPivot('finish');
     }
 
     public function studied_persons() {

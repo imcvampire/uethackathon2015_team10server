@@ -56,6 +56,7 @@
 	                    		<h3>{{ $website->selected }} selected, {{ $website->likes }} likes</h3>
 	                    		<p>{{ $website->intro }}</p>
 	                    	</li>
+	                    	
 	                    @endforeach
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select">Xem thêm</button>
@@ -105,8 +106,6 @@
 	                    	</li>
 	                    @endforeach
 	                </ul>
-	                <button type="submit" class="btn btn-success pull-left btn-select">Xem thêm</button>
-	                <button type="submit" class="btn btn-success pull-right btn-select">Đóng góp</button>
 	                <div class="clearfix"></div>
 	            </div>
 	            <div id="kinh-nghiem">
