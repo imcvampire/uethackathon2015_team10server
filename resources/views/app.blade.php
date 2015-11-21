@@ -21,8 +21,29 @@
     
     @yield('content')
 
-    @yield('scripts')
     @include('footers.footer')
+    
+    @yield('scripts')
+    <script src="/js/vue.min.js"></script>
+    <script src="/js/algoliasearch.min.js"></script>
+    <script>
+
+        new Vue({
+            el: 'body',
+            data: { query: '', subjects: [] },
+            ready: function() {
+                this.client = algoliasearch("Z3FQB6D6HE", "1a935447a04085b30e10986d9eca2453");
+                this.index = this.client.initIndex('subjects');
+            },
+            methods: {
+                search: function() {
+                    this.index.search(this.query, function(error, results) {
+                        this.subjects = results.hits;
+                    }.bind(this));
+                }
+            }
+        });
+    </script>
 </body>
 </html>
 

@@ -7,7 +7,7 @@
         <p>Bạn muốn học một thứ nhưng không biết bắt đầu từ đâu?</p>
         <p>Bạn cảm thấy choáng ngợp trước lượng thông tin khổng lồ và không biết phải bắt đầu như thế nào?</p>
         <p>HowToLearn sẽ giúp bạn giải quyết điều đó</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Hỏi đáp / Đóng góp &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="/ask" role="button">Hỏi đáp / Đóng góp &raquo;</a></p>
 
         <form>
             <div class="form-group">

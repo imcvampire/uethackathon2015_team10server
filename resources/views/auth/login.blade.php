@@ -1,7 +1,7 @@
 <div id="navbar" class="navbar-collapse collapse">
 @if (count($errors) > 0)
 						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
+							<strong>Whoops!</strong> Sai mật khẩu hoặc username rồi.<br><br>
 							<ul>
 								@foreach ($errors->all() as $error)
 									<li>{{ $error }}</li>
