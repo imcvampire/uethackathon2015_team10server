@@ -263,6 +263,7 @@ class SubjectsController extends Controller
         $book = new Book($request->all());
         $subject->books()->save($book);
         \Auth::user()->studied_books()->save($book);
+        session()->flash('info', 'Thêm sách thành công!');
         return redirect('subjects/'.$id);
     }
 
@@ -271,6 +272,7 @@ class SubjectsController extends Controller
         $website = new Website($request->all());
         $subject->books()->save($website);
         \Auth::user()->studied_books()->save($website);
+        session()->flash('info', 'Thêm website thành công!');
         return redirect('subjects/'.$id);
     }
     public function save_person(Request $request, $id){
@@ -278,6 +280,7 @@ class SubjectsController extends Controller
         $person = new Person($request->all());
         $subject->books()->save($person);
         \Auth::user()->studied_books()->save($person);
+        session()->flash('info', 'Thêm chuyên gia thành công!');
         return redirect('subjects/'.$id);
     }
 }

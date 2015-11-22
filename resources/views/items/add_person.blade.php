@@ -1,5 +1,6 @@
 @extends('app')
 
+
 @section('content')
 @include('headers.header2')
     <div class="container">
@@ -24,6 +25,6 @@
         {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
     </div>
 
-    {{ Form::close }}
+    {{ Form::close() }}
     </div>
 @stop
