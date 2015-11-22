@@ -7,7 +7,7 @@
     <meta id="token" name="token" value="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>How to do</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <style type="text/css">
         body {
           padding-top: 50px;
@@ -21,8 +21,6 @@
     @include('headers.header')
     
     @yield('content')
-
-    @include('footers.footer')
 
     @if (\Auth::user() != null)
     <a class="btn btn-success glyphicon glyphicon-th-list" v-on:click="show = !show" style="position: fixed; right: 0%; top: 20%"> NOTES</a>
@@ -39,8 +37,10 @@
 
     <script src="/js/vue.min.js"></script>
     <script src="/js/vue-resource.min.js"></script>
+    
     @yield('scripts')
     <script src="/js/algoliasearch.min.js"></script>
+    
     <script>
         Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
     new Vue({
@@ -60,7 +60,7 @@
             },
             methods: {
                 initialize: function() {
-                    this.$http.post('users/todos/all', function(results) {
+                    this.$http.post('/users/todos/all', function(results) {
                         this.$set('todos', results);
                     });
                 },
