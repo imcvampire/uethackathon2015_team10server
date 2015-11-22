@@ -59,7 +59,11 @@ Route::get('/subjects/{id}', 'SubjectsController@show');
 //  Users Controller
 
 Route::get('/users/profile', 'UsersController@show');
-Route::get('/users/{id}', 'UsersController@view_profile');
+Route::post('/users/books', 'UsersController@moreBooks');
+Route::post('/users/websites', 'UsersController@moreWebsites');
+Route::post('/users/books/remove', 'UsersController@removeBook');
+Route::post('/users/websites/remove', 'UsersController@removeWebsite');
+
 
 
 // ArticlesController
@@ -75,3 +79,27 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+Route::get('subjects/{id}/add_book', 'SubjectsController@add_book');
+Route::get('subjects/{id}/add_person', 'SubjectsController@add_person');
+Route::get('subjects/{id}/add_website', 'SubjectsController@add_website');
+
+Route::post('subjects/{id}/save_book', 'SubjectsController@save_book');
+Route::post('subjects/{id}/save_person', 'SubjectsController@save_person');
+Route::post('subjects/{id}/save_website', 'SubjectsController@save_website');
+
+Route::post('users/todos', function(Request $request) {
+	\Auth::user()->notes()->create(['content' => $request->input('content')]);
+});
+
+Route::post('users/todos/remove', function(Request $request){
+	$content = $request->input('content');
+	$note = App\Note::where('content', $content)->first();
+	$note->delete();
+});
+
+Route::post('/users/todos/all', function() {
+	return \Auth::user()->notes;
+});
+
+Route::get('/users/{id}', 'UsersController@view_profile');

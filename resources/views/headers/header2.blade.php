@@ -1,5 +1,5 @@
 
-<div class="jumbotron">
+<div class="jumbotron" style="margin-top: 20px;">
       <div class="container">
         <h1>HowToLearn</h1>
         <p><a class="btn btn-primary btn-lg" href="/ask" role="button">Hỏi đáp / Đóng góp &raquo;</a></p>

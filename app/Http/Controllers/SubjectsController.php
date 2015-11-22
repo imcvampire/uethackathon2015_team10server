@@ -130,10 +130,13 @@ class SubjectsController extends Controller
         $persons = $subject->persons()
                             ->orderBy('selected', 'desc')
                             ->orderBy('likes', 'desc')->get();
-        foreach ($persons as $person)
-            if ($this->user->studied_persons()->find($person->id) != null)
-                $person->studied = false;
-            else $person->studied = true;
+        if ($this->user != null) {
+            foreach ($persons as $person)
+                if ($this->user->studied_persons()->find($person->id) != null)
+                    $person->studied = true;
+                else $person->studied = false;
+        }
+
         return $persons;
     }
 
@@ -143,10 +146,13 @@ class SubjectsController extends Controller
         $websites = $subject->websites()
                             ->orderBy('selected', 'desc')
                             ->orderBy('likes', 'desc')->get();
-        foreach ($websites as $website)
-            if ($this->user->studied_websites()->find($website->id) != null)
-                $website->studied = false;
-            else $website->studied = true;
+        if ($this->user != null) {
+            foreach ($websites as $website)
+                if ($this->user->studied_websites()->find($website->id) != null)
+                    $website->studied = true;
+                else $website->studied = false;
+        }
+
 
         return $websites;
     }
@@ -157,10 +163,12 @@ class SubjectsController extends Controller
         $books = $subject->books()
                             ->orderBy('selected', 'desc')
                             ->orderBy('likes', 'desc')->get();
-        foreach ($books as $book)
-            if ($this->user->studied_books()->find($book->id) != null)
-                $book->studied = false;
-            else $book->studied = true;
+        if ($this->user != null) {
+            foreach ($books as $book)
+                if ($this->user->studied_books()->find($book->id) != null)
+                    $book->studied = true;
+                else $book->studied = false;
+        }
         return $books;
     }
 
@@ -170,10 +178,12 @@ class SubjectsController extends Controller
         $subjects = $subject->recommend_subjects()
                             ->orderBy('selected', 'desc')
                             ->orderBy('likes', 'desc')->get();
-        foreach ($subjects as $subject)
-            if ($this->user->studied_subjects()->find($subject->id) != null)
-                $subject->studied = false;
-            else $subject->studied = true;
+        if ($this->user != null) {
+            foreach ($subjects as $subject)
+                if ($this->user->studied_subjects()->find($subject->id) != null)
+                    $subject->studied = true;
+                else $subject->studied = false;
+        }
         return $subjects;
     }
 
@@ -235,5 +245,39 @@ class SubjectsController extends Controller
         $subject = Subject::findOrFail($id);
         $subject->delete();
         redirect('subjects');
+    }
+
+    public function add_book($id){
+        return view ('items.add_book', compact('id'));
+    }
+
+    public function add_website($id){
+        return view ('items.add_website', compact('id'));
+    }
+    public function add_person($id){
+        return view ('items.add_person', compact('id'));
+    }
+
+    public function save_book(Request $request, $id){
+        $subject = Subject::findOrFail($id);
+        $book = new Book($request->all());
+        $subject->books()->save($book);
+        \Auth::user()->studied_books()->save($book);
+        return redirect('subjects/'.$id);
+    }
+
+    public function save_website(Request $request, $id){
+        $subject = Subject::findOrFail($id);
+        $website = new Website($request->all());
+        $subject->books()->save($website);
+        \Auth::user()->studied_books()->save($website);
+        return redirect('subjects/'.$id);
+    }
+    public function save_person(Request $request, $id){
+        $subject = Subject::findOrFail($id);
+        $person = new Person($request->all());
+        $subject->books()->save($person);
+        \Auth::user()->studied_books()->save($person);
+        return redirect('subjects/'.$id);
     }
 }

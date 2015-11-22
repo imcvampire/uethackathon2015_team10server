@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('styles')
-	<meta id="token" name="token" value="{{ csrf_token() }}">
+	
 	<meta id="s_id" name="s_id" value="{{ $subject->id }}">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     
@@ -22,8 +22,10 @@
 	                    		<h3>
 	                    			<a href="/subjects/{{ $subject->id }}">@{{ subject.name }}</a>
 	                    			<a class="btn glyphicon glyphicon-thumbs-up @{{ subject.btnLike }}" v-on:click="subjectLike(subject)" >&nbsp;@{{ subject.likes }}</a>
+	                    		@if (\Auth::user() != null)
 	                    			<a class="btn @{{ subject.btnSelected }} 
 	                    			glyphicon glyphicon-check" v-on:click="storeSubject(subject)"> @{{ subject.selected }}</a>
+	                    		@endif
 	                    		</h3>
 	                    	</li>
 	                </ul>
@@ -36,15 +38,17 @@
 	                    		<h3>
 		                    		<a href="@{{ website.link }}">@{{ website.name }}</a> 
 		                    		<a class="btn glyphicon glyphicon-thumbs-up @{{ website.btnLike }}" v-on:click="websiteLike(website)" >&nbsp;@{{ website.likes }}</a>
+		                    	@if (\Auth::user() != null)
 	                    			<a class="btn @{{ website.btnSelected }} 
 	                    			glyphicon glyphicon-check" v-on:click="storeWebsite(website)"> @{{ website.selected }}</a>
+	                    		@endif
 	                    		</h3>
 	                    		<p>@{{ website.intro }}</p>
 	                    	</li>
 	                    	
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startWebsite += 5">Xem thêm</button>
-	                <a href="/articles/create" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
+	                <a href="/subjects/{{ $subject->id }}/add_website" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
 		  </div>
 		  <div id="persons" class="tab-pane fade">
 		    <ul class="list-group">
@@ -52,15 +56,17 @@
 		                    		<h3>
 	                    			<a href="@{{ person.link }}">@{{ person.name }}</a>
 	                    			<a class="btn glyphicon glyphicon-thumbs-up @{{ person.btnLike }}" v-on:click="personLike(person)" >&nbsp;@{{ person.likes }}</a>
+	                    		@if (\Auth::user() != null)
 	                    			<a class="btn @{{ person.btnSelected }} 
 	                    			glyphicon glyphicon-check" v-on:click="storePerson(person)"> @{{ person.selected }}</a>
+	                    		@endif
 	                    		</h3>
 	                    		<img src="@{{ person.avatar }}">
 	                    		<p>@{{ person.intro }}</p>
 	                    	</li>
 	                </ul>
-	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startPerson += 5">Xem thêm</button>
-	                <a href="/articles/create" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
+	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startPerson += 5">Xem thêm</button>	                
+	                <a href="/subjects/{{ $subject->id }}/add_person" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
 		  </div>
 		  <div id="books" class="tab-pane fade">
 		  	<ul class="list-group">
@@ -68,8 +74,10 @@
 	                    		<h3>
 	                    			<a href=@{{ book.link }}>@{{ book.name }}</a>
 	                    			<a class="btn glyphicon glyphicon-thumbs-up @{{ book.btnLike }}" v-on:click="bookLike(book)" >&nbsp;@{{ book.likes }}</a>
+	                    		@if (\Auth::user() != null)
 	                    			<a class="btn @{{ book.btnSelected }} 
 	                    			glyphicon glyphicon-check" v-on:click="storeBook(book)"> @{{ book.selected }}</a>
+	                    		@endif
 	                    		</h3>
 	                    		<img src="@{{ book.avatar }}">
 	                    		<h5>@{{ book.publisher }}</h5>
@@ -77,22 +85,21 @@
 	                    	</li>
 	                </ul>
 	                <button type="submit" class="btn btn-success pull-left btn-select" v-on:click="startBook += 5">Xem thêm</button>
-	                <a href="/articles/create" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
+	                <a href="/subjects/{{ $subject->id }}/add_book" type="submit" class="btn btn-success pull-right btn-select">Đóng góp</a>
 		  </div>
 		  <div id="comments" class="tab-pane fade">
 		  	@include('subjects.disqus')
 		  </div>
 		</div>
+
+		<div style="position: fixed; top: 95%; left: 45%;"><a class="btn  btn-danger" href="/users/profile">Profile</a></div>
 		</div>
 
-	
 @stop
 
 @section('scripts')
 	<script rel="script" type="text/javascript" src="/js/jquery.min.js"></script>
 	<script rel="script" type="text/javascript" src="/js/bootstrap.min.js"></script>
-	<script src="/js/vue.min.js"></script>
-	<script src="/js/vue-resource.min.js"></script>
 	<script>
 	    Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#token').getAttribute('value');
 	    
