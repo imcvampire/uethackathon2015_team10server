@@ -3,15 +3,16 @@
 @section('content')
     <div class="jumbotron">
       <div class="container">
-        <h1>HowToLearn</h1>
+        <h1>HowToLearn </h1>
         <p>Bạn muốn học một thứ nhưng không biết bắt đầu từ đâu?</p>
         <p>Bạn cảm thấy choáng ngợp trước lượng thông tin khổng lồ và không biết phải bắt đầu như thế nào?</p>
         <p>HowToLearn sẽ giúp bạn giải quyết điều đó</p>
         <p><a class="btn btn-primary btn-lg" href="/ask" role="button">Hỏi đáp / Đóng góp &raquo;</a></p>
 
-        <form>
-            <div class="form-group">
-               <input type="search" id="search" class="form-control" placeholder="Search" v-model='query' v-on:keyup="search" class="form-control">
+        <form style="margin-top: 20px">
+            <div class="form-group has-feedback">
+                <i class="glyphicon glyphicon-search form-control-feedback" style="font-size: 20px; padding-top: 10px"></i>
+               <input type="search" id="search" class="form-control" placeholder="Search" v-model='query' v-on:keyup="search" class="form-control" style="height: 50px">
             </div>
         </form>
 
