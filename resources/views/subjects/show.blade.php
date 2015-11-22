@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('styles')
-	<meta id="token" name="token" value="{{ csrf_token() }}">
+	
 	<meta id="s_id" name="s_id" value="{{ $subject->id }}">
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     

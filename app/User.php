@@ -75,5 +75,9 @@ class User extends Model implements AuthenticatableContract,
     public function studied_persons() {
         return $this->belongsToMany('App\Person', 'person_user', 'user_id', 'person_id');
     }
+
+    public function notes() {
+        return $this->hasMany('App\Note');
+    }
 }
 

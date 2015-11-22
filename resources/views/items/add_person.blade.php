@@ -1,6 +1,7 @@
 @extends('app')
 
 @section('content')
+@include('headers.header2')
     <div class="container">
     {!! Form::open(['method' => 'POST' ,'action' => ['SubjectsController@save_person', $id]]) !!}
 

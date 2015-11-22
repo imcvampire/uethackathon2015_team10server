@@ -64,7 +64,6 @@ Route::post('/users/websites', 'UsersController@moreWebsites');
 Route::post('/users/books/remove', 'UsersController@removeBook');
 Route::post('/users/websites/remove', 'UsersController@removeWebsite');
 
-Route::get('/users/{id}', 'UsersController@view_profile');
 
 
 // ArticlesController
@@ -88,3 +87,19 @@ Route::get('subjects/{id}/add_website', 'SubjectsController@add_website');
 Route::post('subjects/{id}/save_book', 'SubjectsController@save_book');
 Route::post('subjects/{id}/save_person', 'SubjectsController@save_person');
 Route::post('subjects/{id}/save_website', 'SubjectsController@save_website');
+
+Route::post('users/todos', function(Request $request) {
+	\Auth::user()->notes()->create(['content' => $request->input('content')]);
+});
+
+Route::post('users/todos/remove', function(Request $request){
+	$content = $request->input('content');
+	$note = App\Note::where('content', $content)->first();
+	$note->delete();
+});
+
+Route::post('/users/todos/all', function() {
+	return \Auth::user()->notes;
+});
+
+Route::get('/users/{id}', 'UsersController@view_profile');
