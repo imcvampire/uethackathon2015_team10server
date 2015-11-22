@@ -92,13 +92,15 @@
 		  </div>
 		</div>
 
+		@if (\Auth::user() != null)
 		<div style="position: fixed; top: 95%; left: 45%;"><a class="btn  btn-danger" href="/users/profile">Profile</a></div>
+		@endif
 		</div>
 
 @stop
 
 @section('scripts')
-	
+
 	<script rel="script" type="text/javascript" src="/js/jquery.min.js"></script>
 	<script rel="script" type="text/javascript" src="/js/bootstrap.min.js"></script>
 	<script>

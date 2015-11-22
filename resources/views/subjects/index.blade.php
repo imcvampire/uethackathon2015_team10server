@@ -3,7 +3,7 @@
 @section('content')
     <div class="jumbotron">
       <div class="container">
-        <h1>HowToLearn</h1>
+        <h1>HowToLearn </h1>
         <p>Bạn muốn học một thứ nhưng không biết bắt đầu từ đâu?</p>
         <p>Bạn cảm thấy choáng ngợp trước lượng thông tin khổng lồ và không biết phải bắt đầu như thế nào?</p>
         <p>HowToLearn sẽ giúp bạn giải quyết điều đó</p>
